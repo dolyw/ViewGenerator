@@ -1,0 +1,6 @@
+spring:
+    datasource:
+        name: prod
+        url: jdbc:mysql://127.0.0.1:3306/prod?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
