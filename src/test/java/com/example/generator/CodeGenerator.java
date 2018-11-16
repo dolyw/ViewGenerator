@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class CodeGenerator {
     // Controller生成类型 REST POST
-    private static final String CONTROLLER_TYPE = "POST";
+    private static final String CONTROLLER_TYPE = "REST";
 
     // JDBC配置
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/dev";

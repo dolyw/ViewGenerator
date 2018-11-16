@@ -2,6 +2,10 @@
 
 > 参考:[https://github.com/lihengming/spring-boot-api-project-seed](https://github.com/lihengming/spring-boot-api-project-seed)
 
+### 项目相关
+
+* JavaDoc:[https://apidoc.gitee.com/wang926454/SpringBootGenerator](https://apidoc.gitee.com/wang926454/SpringBootGenerator)
+
 #### 项目介绍
 
 SpringBootGenerator是一个基于SpringBoot & MyBatis的种子项目，用于快速构建中小型API、RESTful API项目，稳定、简单、快速，使我们摆脱那些重复劳动，专注于业务代码的编写，能在短短几十秒钟内实现一套简单的API(自动生成Model、Mapper、MapperXML、Service、ServiceImpl、Controller基础代码)，并运行提供服务
@@ -30,6 +34,7 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper
 #### 使用说明
 
 1. 可以自行修改src\test\resources\template下的模板
+2. 修改src\test\java\com\example\generator\CodeGenerator.java下的CONTROLLER_TYPE可以生成REST或者POST的Controller模板
 
 #### 参与贡献
 
