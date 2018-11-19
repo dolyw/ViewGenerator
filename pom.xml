@@ -105,7 +105,6 @@
             <version>${freemarker.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -113,14 +112,14 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Guava -->
+        <!-- Guava工具包 -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
 
-        <!-- Commons-Lang3 -->
+        <!-- Commons-Lang3工具包 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

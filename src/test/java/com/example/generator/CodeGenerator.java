@@ -1,6 +1,7 @@
 package com.example.generator;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.Maps;
 import freemarker.template.TemplateExceptionHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
@@ -170,7 +171,7 @@ public class CodeGenerator {
         try {
             freemarker.template.Configuration cfg = getConfiguration();
 
-            Map<String, Object> data = new HashMap<>();
+            Map<String, Object> data = Maps.newHashMap();
             data.put("date", DATE);
             data.put("author", AUTHOR);
             String modelNameUpperCamel = StringUtils.isEmpty(modelName) ? tableNameConvertUpperCamel(tableName) : modelName;
@@ -207,7 +208,7 @@ public class CodeGenerator {
         try {
             freemarker.template.Configuration cfg = getConfiguration();
 
-            Map<String, Object> data = new HashMap<>();
+            Map<String, Object> data = Maps.newHashMap();
             data.put("date", DATE);
             data.put("author", AUTHOR);
             String modelNameUpperCamel = StringUtils.isEmpty(modelName) ? tableNameConvertUpperCamel(tableName) : modelName;
