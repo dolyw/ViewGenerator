@@ -156,7 +156,9 @@ public class CodeGenerator {
         if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
             throw new RuntimeException("生成Model和Mapper失败：" + warnings);
         }
-        if (StringUtils.isEmpty(modelName)) modelName = tableNameConvertUpperCamel(tableName);
+        if (StringUtils.isEmpty(modelName)) {
+            modelName = tableNameConvertUpperCamel(tableName);
+        }
         System.out.println(modelName + ".java 生成成功");
         System.out.println(modelName + "Mapper.java 生成成功");
         System.out.println(modelName + "Mapper.xml 生成成功");
@@ -221,9 +223,9 @@ public class CodeGenerator {
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            if("POST".equals(CONTROLLER_TYPE)){
+            if ("POST".equals(CONTROLLER_TYPE)) {
                 cfg.getTemplate("controller.ftl").process(data, new FileWriter(file));
-            }else{
+            } else {
                 cfg.getTemplate("controller-restful.ftl").process(data, new FileWriter(file));
             }
 

@@ -37,13 +37,13 @@ public class ${modelNameUpperCamel}Controller {
      */
     @PostMapping("/list")
     public ResponseBean list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer rows) {
-        if(page <= 0 || rows <= 0){
+        if (page <= 0 || rows <= 0) {
             page = 1;
             rows = 10;
         }
         PageHelper.startPage(page, rows);
         List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.selectAll();
-        if(list == null || list.size() <= 0){
+        if (list == null || list.size() <= 0) {
             throw new CustomException("查询失败(Query Failure)");
         }
         PageInfo<${modelNameUpperCamel}> pageInfo = new PageInfo<${modelNameUpperCamel}>(list);
@@ -61,7 +61,7 @@ public class ${modelNameUpperCamel}Controller {
     @PostMapping("/detail")
     public ResponseBean detail(@RequestParam Integer id) {
         ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.selectByPrimaryKey(id);
-        if(${modelNameLowerCamel} == null){
+        if (${modelNameLowerCamel} == null) {
             throw new CustomException("查询失败(Query Failure)");
         }
         return new ResponseBean(HttpStatus.OK.value(), "查询成功(Query was successful)", ${modelNameLowerCamel});
@@ -75,7 +75,7 @@ public class ${modelNameUpperCamel}Controller {
     @PostMapping("/add")
     public ResponseBean add(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
         int count = ${modelNameLowerCamel}Service.insert(${modelNameLowerCamel});
-        if(count <= 0){
+        if (count <= 0) {
             throw new CustomException("新增失败(Insert Failure)");
         }
         return new ResponseBean(200, "新增成功(Insert Success)", ${modelNameLowerCamel});
@@ -89,7 +89,7 @@ public class ${modelNameUpperCamel}Controller {
     @PostMapping("/update")
     public ResponseBean update(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
         int count = ${modelNameLowerCamel}Service.updateByPrimaryKeySelective(${modelNameLowerCamel});
-        if(count <= 0){
+        if (count <= 0) {
             throw new CustomException("更新失败(Update Failure)");
         }
         return new ResponseBean(200, "更新成功(Update Success)", ${modelNameLowerCamel});
@@ -103,7 +103,7 @@ public class ${modelNameUpperCamel}Controller {
     @PostMapping("/delete")
     public ResponseBean delete(@RequestParam Integer id) {
         int count = ${modelNameLowerCamel}Service.deleteByPrimaryKey(id);
-        if(count <= 0){
+        if (count <= 0) {
             throw new CustomException("删除失败，ID不存在(Deletion Failed. ID does not exist.)");
         }
         return new ResponseBean(200, "删除成功(Delete Success)", null);
