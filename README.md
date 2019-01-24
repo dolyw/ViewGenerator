@@ -1,5 +1,6 @@
-# SpringBootGenerator
+# SpringBootGenerator(SpringBoot1.5版)
 
+> SpringBoot1.5版(SpringBoot2.0版切换主分支(master))
 > 参考:[https://github.com/lihengming/spring-boot-api-project-seed](https://github.com/lihengming/spring-boot-api-project-seed)
 
 ### 项目相关
