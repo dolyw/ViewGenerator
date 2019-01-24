@@ -154,7 +154,7 @@ public class CodeGenerator {
         }
 
         if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
-            throw new RuntimeException("生成Model和Mapper失败：" + warnings);
+            throw new RuntimeException("生成Model和Mapper失败(请检查数据库是否连接正常及表名是否正确以及权限是否缺失)：" + warnings);
         }
         if (StringUtils.isEmpty(modelName)) {
             modelName = tableNameConvertUpperCamel(tableName);
@@ -197,7 +197,7 @@ public class CodeGenerator {
                     new FileWriter(file1));
             System.out.println(modelNameUpperCamel + "ServiceImpl.java 生成成功");
         } catch (Exception e) {
-            throw new RuntimeException("生成Service失败", e);
+            throw new RuntimeException("生成Service失败(请检查数据库是否连接正常及表名是否正确以及权限是否缺失)", e);
         }
     }
 
@@ -231,7 +231,7 @@ public class CodeGenerator {
 
             System.out.println(modelNameUpperCamel + "Controller.java 生成成功");
         } catch (Exception e) {
-            throw new RuntimeException("生成Controller失败", e);
+            throw new RuntimeException("生成Controller失败(请检查数据库是否连接正常及表名是否正确以及权限是否缺失)", e);
         }
 
     }
