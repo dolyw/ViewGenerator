@@ -1,6 +1,6 @@
-# SpringBootGenerator(SpringBoot2.0版)
+# SpringBootGenerator(SpringBoot2.1版)
 
-> SpringBoot2.0版(SpringBoot1.5版切换分支(springboot1.5))
+> SpringBoot2.1版(SpringBoot1.5版切换分支(springboot1.5))
 > 参考:[https://github.com/lihengming/spring-boot-api-project-seed](https://github.com/lihengming/spring-boot-api-project-seed)
 
 ### 项目相关
@@ -36,6 +36,12 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper
 
 1. 可以自行修改src\test\resources\template下的模板
 2. 修改src\test\java\com\example\generator\CodeGenerator.java下的CONTROLLER_TYPE可以生成REST或者POST的Controller模板
+
+#### SpringBoot1.5升级2.1
+
+* SpringBoot官方文档:[https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#common-application-properties](https://docs.spring.io/spring-boot/docs/2.1.1.RELEASE/reference/htmlsingle/#common-application-properties)
+* 感谢清风丿自来的java.sql.SQLException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized:[https://blog.csdn.net/qq_39098813/article/details/81138648](https://blog.csdn.net/qq_39098813/article/details/81138648)
+* 感谢不信成不了大牛的Loading class 'com.mysql.jdbc.Driver'. This is deprecated. The new driver class is 'com.mysql.cj.jdb:[https://blog.csdn.net/anaini1314/article/details/71157791](https://blog.csdn.net/anaini1314/article/details/71157791)
 
 #### 参与贡献
 

@@ -150,7 +150,7 @@ public class CodeGenerator {
             generator = new MyBatisGenerator(config, callback, warnings);
             generator.generate(null);
         } catch (Exception e) {
-            throw new RuntimeException("生成Model和Mapper失败", e);
+            throw new RuntimeException("生成Model和Mapper失败(请检查数据库是否连接正常及表名是否正确以及权限是否缺失)", e);
         }
 
         if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
