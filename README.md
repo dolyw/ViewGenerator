@@ -1,5 +1,10 @@
 # SpringBootGenerator(SpringBoot2.1版)
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/wang926454/SpringBootGenerator/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/wang926454/SpringBootGenerator.svg?style=social&label=Stars)](https://github.com/wang926454/SpringBootGenerator)
+[![GitHub forks](https://img.shields.io/github/forks/wang926454/SpringBootGenerator.svg?style=social&label=Fork)](https://github.com/wang926454/SpringBootGenerator)
+
 > SpringBoot2.1版(SpringBoot1.5版切换分支(springboot1.5))
 > 参考:[https://github.com/lihengming/spring-boot-api-project-seed](https://github.com/lihengming/spring-boot-api-project-seed)
 
