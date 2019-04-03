@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+		代码生成器配置文件: 
+		1.会为所有的property生成property_dir属性,如pkg=com.uframe => pkg_dir=com/uframe
+		2.可以引用环境变量: ${env.JAVA_HOME} or System.properties: ${user.home},property之间也可以相互引用
+	</comment>
+	
+	<!-- 需要根据实际情况改动的部分  开始-->
+	<!-- basepackage 包命名路径，开发中需要根据具体情况需要此路径-->
+	<entry key="commonspackage">com.yaic.fa</entry>
+	<!-- basepackage 包命名路径，开发中需要根据具体情况需要此路径-->
+	<entry key="basepackage">com.yaic.app.pdms</entry>
+	<!-- html 生成路径: web/${namespace}/${className}/list.jsp -->
+	<entry key="namespace">jsp</entry>
+	<!-- html 模块名称: 页面跳转路径 -->
+	<entry key="modulepackage">pdms</entry>
+	<!-- 代码生成器生成的文件输出路径 -->
+	<entry key="outRoot">\src\main\java\outRoot</entry>
+	<!-- 需要根据实际情况改动的部分  结束-->
+	
+	
+	<!-- 数据库配置部分  开始-->
+	<!-- 数据源配置 -->
+	<entry key="jdbc.url">jdbc:mysql://127.0.0.1:3306/dev?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc.driver">com.mysql.jdbc.Driver</entry>
+	
+	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
+    <entry key="tableRemovePrefixes">t_pdms_</entry>
+	<entry key="jdbc.username">root</entry>
+	<entry key="jdbc.password">root</entry>
+	<!-- oracle需要指定jdbc.schema,并且要大写,其它数据库忽略此项配置   -->	
+	<entry key="jdbc.schema"></entry>
+	<entry key="jdbc.catalog"></entry>
+
+	<!-- 数据库类型至java类型映射  -->
+	<entry key="java_typemapping.java.sql.Timestamp">Date</entry>
+	<entry key="java_typemapping.java.sql.Date">Date</entry>
+	<entry key="java_typemapping.java.sql.Time">Date</entry>	
+	<entry key="java_typemapping.java.lang.Byte">Integer</entry>
+	<entry key="java_typemapping.java.lang.Short">Integer</entry>
+	<entry key="java_typemapping.java.math.BigDecimal">java.math.BigDecimal</entry>
+	<entry key="java_typemapping.java.sql.Clob">String</entry>
+	<entry key="java_typemapping.java.lang.String">String</entry>
+	<entry key="java_typemapping.java.lang.Integer">Integer</entry>
+	<entry key="java_typemapping.java.lang.String">String</entry>
+	<entry key="java_typemapping.java.util.Date">Date</entry>
+	<!-- 数据库配置部分  结束-->
+	
+	<!-- 其他特殊配置  开始-->
+	<!-- 数据库列名大小写 U:大写; L:小写; 不配置默认小写-->
+	<entry key="column.sqlName.caseSize">L</entry>
+	<!-- 数据库表名大小写 U:大写; L:小写; 不配置默认小写-->
+	<entry key="table.sqlName.caseSize">L</entry>
+	<!-- 其他特殊配置  结束-->
+	
+</properties>

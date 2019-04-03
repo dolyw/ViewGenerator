@@ -16,13 +16,11 @@ CREATE TABLE role (
   name varchar(128) not null COMMENT "角色名称"
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT "角色表";
 
-
 CREATE TABLE permission (
   id int primary key auto_increment COMMENT "ID",
   name varchar(128) COMMENT '资源名称',
   per_code varchar(128) not null COMMENT '权限代码字符串'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT "资源表";
-
 
 insert into user values(null, "admin", "admin", now());
 insert into user values(null, "wang", "wang", now());
