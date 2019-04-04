@@ -1,0 +1,201 @@
+<#-- 本文件包含一些公共的函数,本文件会被其它模板自动include -->
+
+<#-- 将value变成jsp el表达式,主要由于FreeMarker生成表达式不方便 -->
+<#macro jspEl value>${r"${"}${value}}</#macro>
+
+<#-- 生成java构造函数 -->
+<#macro generateConstructor constructor>
+	public ${constructor}Domain(){
+	}
+
+	public ${constructor}Domain(
+	<#list table.compositeIdColumns as column>
+		${column.javaType} ${column.columnNameLower}<#if column_has_next>,</#if>
+	</#list>		
+	){
+	<#list table.compositeIdColumns as column>
+		<#if column.pk>
+		this.${column.columnNameLower} = ${column.columnNameLower};
+		</#if>
+	</#list>	
+	}
+
+</#macro>
+
+<#-- 生成属性getter和setter方法 -->
+<#macro genGetSetProperties>
+	<#list table.columns as column>
+		
+	public ${column.javaType} get${column.columnName}() {
+		return this.${column.columnNameLower};
+	}
+	
+	public void set${column.columnName}(${column.javaType} value) {
+		this.${column.columnNameLower} = value;
+	}
+	
+	</#list>
+</#macro>
+
+<#--页面生成非外键表单 -->
+<#macro generateForm column>
+	<td class="layouttable_td_label">
+		<%=${className}Domain.ALIAS_${column.constantName}%>:
+	</td>
+		<#if column.isDateTimeColumn>
+		<td  class="layouttable_td_widget">
+		    <sfform:input path="${column.columnNameLower}" id="${column.columnNameLower}"  class="input_text Wdate" readonly="true"
+				             onclick="WdatePicker({skin:'whyGreen'})"/>
+		</td>
+		<#else>
+		<td class="layouttable_td_widget">
+		 <sfform:input path="${column.columnNameLower}"  id="${column.columnNameLower}"  class="input_text" />
+		</td>
+		</#if>						
+</#macro>
+
+<#--toolbar.jsp页面生成外键表单查询用 -->
+<#macro generateFormOpen column fkPojoClass>
+	<td class="list_td per4_1" align="left">
+		<div class="label"><label for="${column.columnNameLower}"><%=${className}.ALIAS_${column.constantName}%>:</label></div>
+		<#if column.isDateTimeColumn>
+			<div class="input"><sfform:date path="${column.columnNameLower}" id="${column.columnNameLower}" /></div>
+		<#else>
+			<div class="input"><sfform:input path="${column.columnNameLower}" id="${column.columnNameLower}" />
+			<span id="${column.columnNameLower}_span">
+			<img style="cursor:pointer" src="<@jspEl 'ctx'/>resources/styles/ui/images/search.gif"</span>
+			</div>
+			 <script type="text/javascript">	
+			 
+		     $(function() {
+	                 $("#${column.columnNameLower}_span").click(function(){ 
+	                 window.open('<@jspEl 'ctx'/>${fkPojoClass}/main?_SF_SELECT_MODE=${column.columnNameLower}',Zxb.Util.genId(),'height=500,width=800,top=100,left=100,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');	                 	 		           
+		         });
+		       });
+	        </script>
+		</#if>						
+	</td>
+</#macro>
+
+<#--jsp页面生成表单新增,编辑用,无弹出框-->
+<#macro generateEditForm column>
+	<td class="list_td per4_1" align="left">
+		<div class="label"><label for="${column.columnNameLower}"><%=${className}.ALIAS_${column.constantName}%>:</label></div>
+		<#if column.isDateTimeColumn>
+		<div class="input"><sfform:date path="${column.columnNameLower}" id="${column.columnNameLower}" notnull="${(!column.nullable)?string}"/></div>
+		<#else>
+		<div class="input"><sfform:input path="${column.columnNameLower}" notnull="${(!column.nullable)?string}"/></div>
+		</#if>						
+	</td>
+</#macro>
+
+<#--jsp页面生成表单新增,编辑用，外键表单有弹出框-->
+<#macro generateEditFormOpen column fkPojoClass>
+	<td class="list_td per4_1" align="left">
+		<div class="label"><label for="${column.columnNameLower}"><%=${className}.ALIAS_${column.constantName}%>:</label></div>
+		<#if column.isDateTimeColumn>
+			<div class="input"><sfform:date path="${column.columnNameLower}" id="${column.columnNameLower}" notnull="${(!column.nullable)?string}"/></div>
+		<#else>
+			<div class="input"><sfform:input path="${column.columnNameLower}" id="${column.columnNameLower}" notnull="${(!column.nullable)?string}"/>
+			<span id="${column.columnNameLower}_span">
+			<img style="cursor:pointer" src="<@jspEl 'ctx'/>resources/styles/ui/images/search.gif"</span>
+			</div>
+			 <script type="text/javascript">	
+			 
+		     $(function() {
+	                 $("#${column.columnNameLower}_span").click(function(){ 		 
+		            window.open('<@jspEl 'ctx'/>${fkPojoClass}/main?_SF_SELECT_MODE=${column.columnNameLower}',Zxb.Util.genId(),'height=500,width=800,top=100,left=100,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no');
+		         });
+		       });
+	        </script>
+		</#if>						
+	</td>
+</#macro>
+
+<#--主键数据类型，暂不考虑复合主键-->
+<#macro getPKDataType>
+	${table.pkColumn.javaType}
+</#macro>
+
+<#--主键数据类型加上引号，以免在ibaits配置文件中不识别，暂不考虑复合主键-->
+<#macro getPKDataTypeForIbatis>
+	"${table.pkColumn.javaType}"
+</#macro>
+
+<#--返回主键的get方法，暂不考虑复合主键-->
+<#macro getPKGetMethod>
+	get${table.pkColumn.columnName}()
+</#macro>
+
+<#--查看页面(view.jsp)表单布局 -->
+<#macro generateViewForm column>	
+	<td class="list_td per4_1" align="left">
+		<div class="label"><label for="${column.columnNameLower}"><%=${className}.ALIAS_${column.constantName}%>:</label></div>
+		<div class="input"><sfform:input path="${column.columnNameLower}" /></div>
+	</td>	
+</#macro>
+
+<#--获取表中所有主键 -->
+<#macro generateIdQueryString>
+	<#assign itemPrefix = 'item.'>
+<#compress>
+		<#list table.compositeIdColumns as column>
+			<#if column.isDateTimeColumn>
+				<#t>${column.columnNameLower}=<fmt:formatDate value="<@jspEl itemPrefix + column.columnNameLower/>" type="date" dateStyle="default" />&
+			<#else>
+				<#t>${column.columnNameLower}=<@jspEl itemPrefix + column.columnNameLower/>&
+			</#if>
+			
+		</#list>				
+</#compress>
+</#macro>
+
+<#--获取表中所有主键,组装成新的方式传递到后台 -->
+<#macro generateIdForNew>
+		<#list table.compositeIdColumns as column>
+			<#if column.isDateTimeColumn>
+				<#t>${column.columnNameLower}=<fmt:formatDate value="row['column.columnNameLower']" type="date" dateStyle="default" />&
+			<#else>
+				<#t>${column.columnNameLower}=row['${column.columnNameLower}']&
+			</#if>
+		</#list>				
+</#macro>
+
+<#--获取表中所有主键,组成json数据格式 -->
+<#macro generateCompIdJsonString>
+	<#assign itemPrefix = 'item.'>
+<#compress>
+		<#list table.compositeIdColumns as column>			
+			<#t>${column.columnNameLower}:'<@jspEl itemPrefix + column.columnNameLower/>'<#if column_has_next>,</#if>				
+		</#list>			
+</#compress>
+</#macro>
+
+<#--主键-->
+<#macro getAllPK>
+		<#list table.compositeIdColumns as column>
+			java.lang.String ${column.columnNameLower}<#if column_has_next>,</#if>
+		</#list>	
+</#macro>
+
+<#--把主键放入Map中-->
+<#macro setAllPKToMap>
+		<#list table.compositeIdColumns as column>
+		     map.put("${column.columnNameLower}",${column.columnNameLower});
+		</#list>	
+</#macro>
+
+<#--domain中字段属性-->
+<#macro generateFields>
+	<#list table.columns as column>
+	    /**
+	     * ${column.columnAlias!}       db_column: ${column.sqlName} 
+	     */ 
+		<#if column.isDateTimeColumn>
+		@DateTimeFormat(pattern="yyyy-MM-dd")
+		private ${column.javaType} ${column.columnNameLower};
+		<#else>
+		private ${column.javaType} ${column.columnNameLower};
+		</#if>		
+	</#list>
+</#macro>

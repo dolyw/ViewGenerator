@@ -15,9 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 代码生成(根据表生成对应的Model、Mapper、Service、Controller)
+ * 代码生成1.0(根据表生成对应的Model、Mapper、Service、Controller)(推荐使用2.0)
  */
-public class CodeGenerator {
+public class CodeGeneratorOne {
     // Controller生成类型 REST POST
     private static final String CONTROLLER_TYPE = "REST";
 
@@ -45,7 +45,7 @@ public class CodeGenerator {
     // 项目在硬盘上的基础路径
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     // 模板位置
-    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/template";
+    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/template/one";
     // Java文件路径
     private static final String JAVA_PATH = "/src/main/java";
     // 资源文件路径
@@ -58,7 +58,7 @@ public class CodeGenerator {
     private static final String PACKAGE_PATH_CONTROLLER = packageConvertPath(CONTROLLER_PACKAGE);
 
     // 作者
-    private static final String AUTHOR = "CodeGenerator";
+    private static final String AUTHOR = "CodeGeneratorOne";
     // 时间
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd HH:ss").format(new Date());
 
@@ -233,7 +233,6 @@ public class CodeGenerator {
         } catch (Exception e) {
             throw new RuntimeException("生成Controller失败(请检查数据库是否连接正常及表名是否正确以及权限是否缺失)", e);
         }
-
     }
 
     private static freemarker.template.Configuration getConfiguration() throws IOException {
@@ -250,7 +249,6 @@ public class CodeGenerator {
 
     private static String tableNameConvertUpperCamel(String tableName) {
         return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, tableName.toLowerCase());
-
     }
 
     private static String tableNameConvertMappingPath(String tableName) {
