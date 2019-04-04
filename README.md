@@ -13,7 +13,7 @@
 -----|-----|----
 SpringBoot1.5 | Test类生成代码  | [https://github.com/wang926454/SpringBootGenerator/tree/springboot1.5](https://github.com/wang926454/SpringBootGenerator/tree/springboot1.5)
 SpringBoot2.1 | Test类生成代码  | 当前
-SpringBoot1.5 | 可视化界面操作生成代码  | [https://github.com/wang926454/SpringBootGenerator/tree/viewgenerator](https://github.com/wang926454/SpringBootGenerator/tree/viewgenerator)
+SpringBoot1.5 | 可视化界面生成代码  | [https://github.com/wang926454/SpringBootGenerator/tree/viewgenerator](https://github.com/wang926454/SpringBootGenerator/tree/viewgenerator)
 
 #### 项目介绍
 
@@ -33,26 +33,26 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper
 
 ``` lua
 src
-├─main -- main运行主体代码
-│  ├─java
-│  └─resources
-└─test -- test单元测试
-    ├─java
-    │  └─com
-    │     ├─example
-    │     │  ├─base -- 通用单元测试基础类
-    │     │  ├─generator -- 代码生成器第一版，第二版执行Main函数
-    │     │  └─test -- test代码
-    │     └─uframe -- 代码生成器第二版核心代码
-    │        └─generator -- 代码生成器第二版核心代码
-    └─resources -- test resources
-        ├─config -- 代码生成器第二版配置代码
-        ├─sql -- SQL文件示例
-        └─template
-            ├─one -- 代码生成器第一版模板
-            └─two -- 代码生成器第二版模板
-                ├─LayUI -- 代码生成器第二版LayUI模板示例
-                └─RESTful -- 代码生成器第二版RESTful模板示例
+├─ main -- main运行主体代码
+│   ├─ java
+│   └─ resources
+└─ test -- test单元测试
+    ├─ java
+    │   └─ com
+    │       ├─ example
+    │       │   ├─ base -- 通用单元测试基础类
+    │       │   ├─ generator -- 代码生成器第一版，第二版执行Main函数
+    │       │   └─ test -- test代码
+    │       └─ uframe -- 代码生成器第二版核心代码
+    │           └─ generator -- 代码生成器第二版核心代码
+    └─ resources -- test resources
+        ├─ config -- 代码生成器第二版配置代码
+        ├─ sql -- SQL文件示例
+        └─ template
+            ├─ one -- 代码生成器第一版模板
+            └─ two -- 代码生成器第二版模板
+                ├─ LayUI -- 代码生成器第二版LayUI模板示例
+                └─ RESTful -- 代码生成器第二版RESTful模板示例
 ```
 
 #### 安装教程
