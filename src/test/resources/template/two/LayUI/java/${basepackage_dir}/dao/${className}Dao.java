@@ -7,6 +7,7 @@ package ${basepackage}.dao;
 import java.util.List;
 
 import ${basepackage}.dto.custom.${className}Dto;
+import org.springframework.stereotype.Repository;
 import ${commonspackage}.dao.BaseDao;
 
 /**
@@ -14,8 +15,16 @@ import ${commonspackage}.dao.BaseDao;
  * @author Generator
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
+@Repository
 public interface ${className}Dao extends BaseDao<${className}Dto> {
 
+    /**
+     * 列表
+     * @param ${classNameLower}Dto
+     * @return java.util.List<${basepackage}.dto.custom.${className}Dto;>
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
+     */
     public List<${className}Dto> findPageInfo(${className}Dto ${classNameLower}Dto);
 
 }

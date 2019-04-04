@@ -18,7 +18,7 @@ public class CodeGeneratorTwo {
     /**
      * 生成代码模板位置
      */
-    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/template/two/LayUI";
+    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/template/two/RESTful";
 
     /**
      * 有三点需要引起特别的注意
@@ -28,21 +28,21 @@ public class CodeGeneratorTwo {
      */
     public static void main(String[] args) throws Exception {
         // 配置表名
-        genCode("user", "role", "permission");
+        genCode("user", "role");
     }
 
     /**
-     * 通过表名称生成代码，Model名称通过解析数据表名称获得，下划线转大驼峰的形式
-     * @param tableNames 表名称...
+     * 通过表名称生成代码
+     * @param tableNames
      */
     public static void genCode(String... tableNames) {
         // GeneratorFacade
         GeneratorFacade generatorFacade = new GeneratorFacade();
         // 开始执行
         try {
+            // 删除旧文件
+            generatorFacade.deleteByAllTable(TEMPLATE_FILE_PATH);
             for (String tableName : tableNames) {
-                // 删除旧文件
-                generatorFacade.deleteByTable(tableName, TEMPLATE_FILE_PATH);
                 // 生成新文件
                 generatorFacade.generateByTable(tableName, TEMPLATE_FILE_PATH);
             }

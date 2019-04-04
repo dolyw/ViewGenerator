@@ -7,6 +7,8 @@ package ${basepackage}.dto.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -63,6 +65,7 @@ public class ${className}DtoBase extends BaseDto implements Serializable {
     <#else>
     <#if column.pk>
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     </#if>
     private ${column.javaType} ${column.columnNameLower};
 

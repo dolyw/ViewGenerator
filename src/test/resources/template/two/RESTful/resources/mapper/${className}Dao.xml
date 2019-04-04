@@ -17,21 +17,21 @@
 
 	<sql id="${classNameLower}AliasColumns">
 		<#list table.columns as column>
-		g.${column.sqlName} AS ${column.columnNameLower} <#if column_has_next>,</#if>
+		g.${column.sqlName} AS ${column.columnNameLower}<#if column_has_next>,</#if>
 		</#list>
 	</sql>
 
 	<select id="findPageInfo" resultType="${basepackage}.dto.custom.${className}Dto">
 		SELECT
 			<#list table.columns as column>
-			g.${column.sqlName} AS ${column.columnNameLower} <#if column_has_next>,</#if>
+			g.${column.sqlName} AS ${column.columnNameLower}<#if column_has_next>,</#if>
 			</#list>
 		FROM
 			${table.sqlName} g
 		<where>
-			1=1
+			1 = 1
 			<#list table.columns as column>
-			<if test="${column.columnNameLower} != null and ${column.columnNameLower} != '' ">
+			<if test="${column.columnNameLower} != null and ${column.columnNameLower} != ''">
 			AND	g.${column.sqlName} = #${r'{'}${column.columnNameLower}${r'}'}
 			</if>
 			</#list>

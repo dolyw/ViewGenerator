@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import ${commonspackage}.dto.JsonRequest;
-import com.yaic.fa.mybatis.pagehelper.PageInfo;
+import com.mybatis.pagehelper.PageInfo;
 
 import ${basepackage}.dto.custom.${className}Dto;
 import ${basepackage}.service.${className}Service;
@@ -39,6 +39,8 @@ public class ${className}Controller {
 
     /**
      * 主页面
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @RequestMapping
     public String index(HttpServletRequest request) {
@@ -47,6 +49,8 @@ public class ${className}Controller {
 
     /**
      * 列表
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
     @RequestMapping(value = "list", method = RequestMethod.POST)
@@ -62,9 +66,11 @@ public class ${className}Controller {
 
     /**
      * 预新增
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
-    @RequestMapping(value = "/prepareInsert")
+    @RequestMapping(value = "/prepareInsert", method = RequestMethod.POST)
     public Map<String, Object> prepareInsert(@RequestBody ${className}Dto ${classNameLower}Dto) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         ${classNameLower}Dto = new ${className}Dto();
@@ -74,9 +80,11 @@ public class ${className}Controller {
 
     /**
      * 新增
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
-    @RequestMapping(value = "/insert")
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public Map<String, Object> insert(@RequestBody ${className}Dto ${classNameLower}Dto) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         ${classNameLower}Service.insertNotNull(${classNameLower}Dto);
@@ -87,9 +95,11 @@ public class ${className}Controller {
 
     /**
      * 预修改
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
-    @RequestMapping(value = "/prepareUpdate")
+    @RequestMapping(value = "/prepareUpdate", method = RequestMethod.POST)
     public Map<String, Object> prepareUpdate(@RequestBody ${className}Dto ${classNameLower}Dto) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         ${classNameLower}Dto = ${classNameLower}Service.selectByPrimaryKey(${classNameLower}Dto);
@@ -99,9 +109,11 @@ public class ${className}Controller {
 
     /**
      * 修改
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Map<String, Object> update(@RequestBody ${className}Dto ${classNameLower}Dto) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         ${classNameLower}Service.updateByPrimaryKey(${classNameLower}Dto);
@@ -112,10 +124,12 @@ public class ${className}Controller {
 
     /**
      * 删除
+     * @author Generator
+     * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
     @Transactional
-    @RequestMapping(value = "/delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestBody JsonRequest<${className}Dto> jsonRequest) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
         List<${className}Dto>  ${classNameLower}List = JSON.parseArray((jsonRequest.getExtend().get("${classNameLower}List")), ${className}Dto.class);
@@ -126,5 +140,4 @@ public class ${className}Controller {
         resultMap.put("msg", "删除成功");
         return resultMap;
     }
-
 }

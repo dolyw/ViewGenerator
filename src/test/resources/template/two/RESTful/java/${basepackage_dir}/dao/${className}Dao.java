@@ -5,6 +5,7 @@
 package ${basepackage}.dao;
 
 import ${basepackage}.dto.custom.${className}Dto;
+import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author Generator
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
+@Repository
 public interface ${className}Dao extends Mapper<${className}Dto> {
 
     /**

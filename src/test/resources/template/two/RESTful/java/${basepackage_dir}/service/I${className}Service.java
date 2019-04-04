@@ -4,7 +4,7 @@
 <#assign classNameLower = className?uncap_first> 
 package ${basepackage}.service;
 
-import com.sinosoft.core.service.IBaseService;
+import ${basepackage}.common.IBaseService;
 import ${basepackage}.dto.custom.${className}Dto;
 import java.util.List;
 

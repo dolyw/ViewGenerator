@@ -6,7 +6,7 @@ package ${basepackage}.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sinosoft.core.service.impl.BaseServiceImpl;
+import ${basepackage}.common.impl.BaseServiceImpl;
 
 import ${basepackage}.dao.${className}Dao;
 import ${basepackage}.dto.custom.${className}Dto;

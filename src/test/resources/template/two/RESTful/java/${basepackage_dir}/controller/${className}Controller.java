@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ${basepackage}.dto.custom.${className}Dto;
 import ${basepackage}.service.I${className}Service;
+import ${basepackage}.common.ResponseBean;
+import ${basepackage}.exception.CustomException;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sinosoft.app.dto.common.BaseDto;
-import com.sinosoft.core.dto.ResponseBean;
-import com.sinosoft.app.exception.CustomException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +30,12 @@ import java.util.Map;
 @RequestMapping("${classNameLower}")
 public class ${className}Controller {
 
+    private final I${className}Service ${classNameLower}Service;
+
     @Autowired
-    private I${className}Service ${classNameLower}Service;
+    public ${className}Controller (I${className}Service ${classNameLower}Service) {
+        this.${classNameLower}Service = ${classNameLower}Service;
+    }
 
     /**
      * 列表
@@ -38,23 +43,20 @@ public class ${className}Controller {
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @GetMapping
-    public ResponseBean list(BaseDto baseDto) {
-        // 分页是否为空
-        if (baseDto.getPage() == null || baseDto.getRows() == null) {
-            baseDto.setPage(1);
-            baseDto.setRows(10);
+    public ResponseBean list(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer rows) {
+        if (page <= 0 || rows <= 0) {
+            page = 1;
+            rows = 10;
         }
-        // 分页查询参数，页数，行数，排序列 + " " + 排序规则
-        PageHelper.startPage(baseDto.getPage(), baseDto.getRows(), baseDto.getSidx() + " " + baseDto.getSord());
-        List<${className}Dto> ${classNameLower}DtoList = ${classNameLower}Service.selectAll();
-        PageInfo<${className}Dto> selectPage = new PageInfo<${className}Dto>(${classNameLower}DtoList);
-        // 查询数量小于0
-        if (${classNameLower}DtoList == null || ${classNameLower}DtoList.size() <= 0) {
+        PageHelper.startPage(page, rows);
+        List<${className}Dto> list = ${classNameLower}Service.selectAll();
+        if (list == null || list.size() <= 0) {
             throw new CustomException("查询失败(Query Failure)");
         }
+        PageInfo<${className}Dto> pageInfo = new PageInfo<${className}Dto>(list);
         Map<String, Object> result = new HashMap<String, Object>(16);
-        result.put("count", selectPage.getTotal());
-        result.put("data", selectPage.getList());
+        result.put("count", pageInfo.getTotal());
+        result.put("data", pageInfo.getList());
         return new ResponseBean(HttpStatus.OK.value(), "查询成功(Query was successful)", result);
     }
 
