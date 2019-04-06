@@ -5,11 +5,15 @@
  */
 package com.example.controller;
 
+import cn.org.rapid_framework.generator.Generator;
+import cn.org.rapid_framework.generator.GeneratorFacade;
+import cn.org.rapid_framework.generator.GeneratorProperties;
+import com.example.constant.Constant;
 import com.example.dao.GeneratorDao;
 import com.example.exception.SystemException;
 import com.example.util.SafeProperties;
 import com.example.util.ZipUtil;
-import com.uframe.generator.GeneratorFacade;
+import com.generator.CustomGeneratorFacade;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,11 +41,6 @@ import java.util.*;
 @RestController
 @RequestMapping("database")
 public class DataBaseController {
-
-    /**
-     * 项目在硬盘上的基础路径
-     */
-    private static final String PROJECT_PATH = System.getProperty("user.dir");
 
     /**
      * 代码生成的文件输出路径
@@ -134,10 +133,16 @@ public class DataBaseController {
      * @date 2019-04-05 18:00:26
      */
     @PostMapping("/{tableName}")
-    public ResponseBean genTable(@PathVariable("tableName") String tableName) {
+    public ResponseBean genTable(@PathVariable("tableName") String tableName) throws IOException {
         // 配置表名
         String[] tableNames = tableName.split("-");
-        if (genCode(tableNames, null)) {
+        if (outRoot == null) {
+            throw new IllegalArgumentException("outRootDir must be not null");
+        } else if (outRoot.indexOf(Constant.COLON) < 0) {
+            // 项目在硬盘上的基础路径
+            outRoot = System.getProperty("user.dir") + outRoot;
+        }
+        if (genCode(tableNames, outRoot)) {
             System.out.println("----- 生成成功 -----");
             // 获得系统属性集
             Properties props = System.getProperties();
@@ -199,24 +204,20 @@ public class DataBaseController {
      * 通过表名称生成代码
      * @param tableNames
      */
-    public boolean genCode(String[] tableNames, String outRootDir) {
-        // GeneratorFacade
-        GeneratorFacade generatorFacade = null;
-        if (outRootDir == null) {
-            generatorFacade = new GeneratorFacade();
-        } else {
-            generatorFacade = new GeneratorFacade(outRootDir);
-        }
+    public boolean genCode(String[] tableNames, String outRootDir) throws IOException {
+        GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRootDir);
+        // 配置信息
+        GeneratorProperties.load(new String[]{ "classpath:config/generator.properties" });
+        // 模板位置
+        Generator generator = generatorFacade.getGenerator();
+        generator.addTemplateRootDir(Constant.PROJECT_PATH + template);
         // 开始执行
         try {
             for (String tableName : tableNames) {
-                // 有设置输出路径说明为临时路径，不需要旧删除文件
-                if (outRootDir == null) {
-                    // 删除旧文件
-                    generatorFacade.deleteByTable(tableName, PROJECT_PATH + template);
-                }
+                // 删除旧文件
+                generatorFacade.deleteByTable(tableName);
                 // 生成新文件
-                generatorFacade.generateByTable(tableName, PROJECT_PATH + template);
+                generatorFacade.generateByTable(tableName);
             }
         } catch (Exception e) {
             System.out.println("----- 生成失败 请检查数据库是否连接正常及表名是否正确以及权限是否缺失 -----");

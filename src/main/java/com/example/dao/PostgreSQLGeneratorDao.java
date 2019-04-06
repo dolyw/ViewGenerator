@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * @date 2019/4/5 18:21
  */
 @Repository
-public interface PostgreSQLGeneratorDao extends GeneratorDao {
+public interface PostgreSqlGeneratorDao extends GeneratorDao {
 
 }

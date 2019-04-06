@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.constant.DataBaseEnum;
 import com.example.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,42 +14,22 @@ import org.springframework.context.annotation.Primary;
  * @date 2019/4/5 17:56
  */
 @Configuration
-public class DbConfig {
+public class DataBaseConfig {
 
-    /**
-     * MYSQL
-     */
-    private static final String MYSQL = "mysql";
-
-    /**
-     * ORACLE
-     */
-    private static final String ORACLE = "oracle";
-
-    /**
-     * POSTGRESQL
-     */
-    private static final String POSTGRESQL = "postgresql";
-
-    /**
-     * SQLSERVER
-     */
-    private static final String SQLSERVER = "sqlserver";
-
-    @Value("${jdbc.driver}")
+    @Value("${jdbc_driver}")
     private String driver;
 
     @Autowired
-    private MySQLGeneratorDao mySQLGeneratorDao;
+    private MySqlGeneratorDao mySqlGeneratorDao;
 
     @Autowired
     private OracleGeneratorDao oracleGeneratorDao;
 
     @Autowired
-    private PostgreSQLGeneratorDao postgreSQLGeneratorDao;
+    private PostgreSqlGeneratorDao postgreSqlGeneratorDao;
 
     @Autowired
-    private SQLServerGeneratorDao sqlServerGeneratorDao;
+    private SqlServerGeneratorDao sqlServerGeneratorDao;
 
     /**
      * 根据驱动判断注入那个类型数据库
@@ -61,13 +42,14 @@ public class DbConfig {
     @Bean
     @Primary
     public GeneratorDao getGeneratorDao() {
-        if(driver.indexOf(MYSQL) > 0) {
-            return mySQLGeneratorDao;
-        } else if (driver.indexOf(ORACLE) > 0) {
+        String str = DataBaseEnum.MYSQL.getValue();
+        if(driver.indexOf(DataBaseEnum.MYSQL.getValue()) > 0) {
+            return mySqlGeneratorDao;
+        } else if (driver.indexOf(DataBaseEnum.ORACLE.getValue()) > 0) {
             return oracleGeneratorDao;
-        } else if (driver.indexOf(POSTGRESQL) > 0) {
-            return postgreSQLGeneratorDao;
-        } else if (driver.indexOf(SQLSERVER) > 0) {
+        } else if (driver.indexOf(DataBaseEnum.POSTGRESQL.getValue()) > 0) {
+            return postgreSqlGeneratorDao;
+        } else if (driver.indexOf(DataBaseEnum.SQLSERVER.getValue()) > 0) {
             return sqlServerGeneratorDao;
         }
         return null;

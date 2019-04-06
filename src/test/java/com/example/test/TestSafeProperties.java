@@ -1,8 +1,8 @@
 package com.example.test;
 
+import cn.org.rapid_framework.generator.GeneratorProperties;
 import com.example.base.BaseTest;
 import com.example.util.SafeProperties;
-import com.uframe.generator.GeneratorProperties;
 import org.junit.Test;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ public class TestSafeProperties extends BaseTest {
      */
     @Test
     public void write() throws Exception {
-        final Enumeration urls = GeneratorProperties.class.getClassLoader().getResources("config/generator.properties");
+        final Enumeration urls = TestSafeProperties.class.getClassLoader().getResources("config/generator.properties");
         while (urls.hasMoreElements()) {
             final URL url = (URL) urls.nextElement();
             InputStream input = null;

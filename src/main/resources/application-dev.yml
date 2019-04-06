@@ -1,6 +1,6 @@
 spring:
     datasource:
         name: dev
-        url: ${jdbc.url}
-        username: ${jdbc.username}
-        password: ${jdbc.password}
+        url: ${jdbc_url}
+        username: ${jdbc_username}
+        password: ${jdbc_password}

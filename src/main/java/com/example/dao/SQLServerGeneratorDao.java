@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * @date 2019/4/5 18:22
  */
 @Repository
-public interface SQLServerGeneratorDao extends GeneratorDao {
+public interface SqlServerGeneratorDao extends GeneratorDao {
 
 }

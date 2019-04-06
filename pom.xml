@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>SpringBootGenerator</artifactId>
+    <artifactId>ViewGenerator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>SpringBootGenerator</name>
+    <name>ViewGenerator</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -33,6 +33,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <commons-io.version>2.5</commons-io.version>
         <antlr.version>3.2</antlr.version>
+        <rapid.version>4.0.6</rapid.version>
     </properties>
 
     <dependencies>
@@ -117,16 +118,16 @@
             <artifactId>freemarker</artifactId>
             <version>${freemarker.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.rapid-framework</groupId>
+            <artifactId>rapid-generator</artifactId>
+            <version>${rapid.version}</version>
+        </dependency>
         <!--<dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-maven-plugin</artifactId>
             <version>${generator.version}</version>
         </dependency>-->
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>${antlr.version}</version>
-        </dependency>
 
         <!-- Guava工具包 -->
         <!--<dependency>

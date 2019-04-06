@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * @date 2019/4/5 17:53
  */
 @Repository
-public interface MySQLGeneratorDao extends GeneratorDao {
+public interface MySqlGeneratorDao extends GeneratorDao {
 
 }
