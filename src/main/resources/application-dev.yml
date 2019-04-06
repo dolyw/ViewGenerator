@@ -1,6 +1,6 @@
 spring:
     datasource:
         name: dev
-        url: jdbc:mysql://127.0.0.1:3306/dev?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=UTF-8
-        username: root
-        password: root
+        url: ${jdbc.url}
+        username: ${jdbc.username}
+        password: ${jdbc.password}

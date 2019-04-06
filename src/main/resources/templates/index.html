@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/common/common :: head('首页')"></head>
+
+<body>
+
+<header th:include="/common/common :: header('首页')"></header>
+
+<div class="admin">
+
+    <div th:include="/common/common :: sidebar"></div>
+
+    <div class="content-page">
+        <div class="content">
+
+            <div class="am-g">
+
+                <!-- Row start -->
+                <div class="am-u-md-12">
+                    <div class="card-box">
+                        <!--<h4 class="header-title m-t-0 m-b-30">介绍</h4>-->
+                        <b>项目介绍<br/></b>
+                        <p>
+                            SpringBootGenerator是一个基于SpringBoot & FreeMarker的自定义模板代码生成系统，用于快速构建中小型项目，稳定、简单、快速，使我们摆脱那些重复劳动，专注于业务代码的编写，能在短短几十秒钟内实现一套简单的基础代码(自动生成Model、Mapper、MapperXML、Service、ServiceImpl、Controller、JS、Vue等自定义模板代码)<br/>
+                            <br/>
+                            1. 可视化界面，上手操作简单<br/>
+                            2. 高度灵活的代码模板配置(提供两套模板参考)，可以自行添加N套代码模板<br/>
+                            3. 支持多数据库，支持在线生成代码且可提供ZIP文件下载<br/>
+                        </p>
+                        <b>安装使用<br/></b>
+                        <p>
+                            1. 配置resource下config/generator.properties数据库信息<br/>
+                            2. 模板提供两套示例LayUI和RESTful，自行添加模板路径src\test\resources\template\two<br/>
+                            3. 运行项目src\main\java\com\example\Application.java即可，访问http://localhost:8080，可以在线设置生成代码的配置<br/>
+                        </p>
+                        <b>更多详细说明<br/></b>
+                        <p>
+                            1. Github：<a href="https://github.com/wang926454/SpringBootGenerator" target="_blank">https://github.com/wang926454/SpringBootGenerator</a><br/>
+                            2. Gitee(码云)：<a href="https://gitee.com/wang926454/SpringBootGenerator" target="_blank">https://gitee.com/wang926454/SpringBootGenerator</a><br/>
+                            3. 关于作者：<a href="https://wang64.cn" target="_blank">https://wang64.cn</a><br/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:include="/common/common :: commonJS" th:remove="tag"></div>
+
+</body>
+
+</html>

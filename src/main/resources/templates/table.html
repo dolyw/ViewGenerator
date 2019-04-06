@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/common/common :: head('生成代码')"></head>
+
+<body>
+
+<header th:include="/common/common :: header('生成代码')"></header>
+
+<div class="admin">
+
+    <div th:include="/common/common :: sidebar"></div>
+
+    <div class="content-page">
+        <div class="content">
+
+            <div class="am-g">
+
+                <!-- Row start -->
+                <div class="am-u-md-12">
+                    <div class="card-box">
+
+                        <div id="app">
+
+                            <!-- 查询表单 -->
+                            <el-form :inline="true" :model="searchForm" label-width="90px" size="small">
+
+                                <el-form-item>
+                                    <el-input placeholder="请输入表名" @keyup.enter.native="list(searchForm)" v-model="searchForm.tableName" clearable></el-input>
+                                    <el-input v-show="false" placeholder="请输入表名" @keyup.enter.native="list(searchForm)" v-model="searchForm.tableName" clearable></el-input>
+                                </el-form-item>
+
+                                <el-form-item>
+                                    <el-button icon="el-icon-search" @click="list(searchForm)">查询</el-button>
+                                    <el-button type="success" icon="el-icon-arrow-right" @click="genCode" :loading="genLoading">生成代码到输出路径</el-button>
+                                    <el-button type="info" icon="el-icon-download" @click="genCodeToZip" :loading="genLoading">生成代码为Zip文件下载</el-button>
+                                </el-form-item>
+
+                            </el-form>
+
+                            <!-- 数据表格 -->
+                            <el-table v-loading="tableLoading" :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
+                                <el-table-column type="selection" align="center" width="55"></el-table-column>
+                                <el-table-column type="index" align="center" min-width="60"/>
+                                <el-table-column prop="tableName" label="表名" align="center" min-width="100" show-overflow-tooltip />
+                                <el-table-column prop="tableComment" label="表注释" align="center" min-width="100" show-overflow-tooltip />
+                                <el-table-column prop="engine" label="表类型" align="center" min-width="80" show-overflow-tooltip />
+                                <el-table-column prop="createTime" label="创建时间" align="center" min-width="100" show-overflow-tooltip>
+                                    <template slot-scope="scope">
+                                        {{ moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="操作" align="center" fixed="right" min-width="60">
+                                    <template slot-scope="scope">
+                                        <el-button size="mini" icon="el-icon-info" type="primary" @click="preByTableName(scope.row)">详细</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <div align="right" style="margin-top:10px;">
+                                <el-pagination
+                                        :current-page="searchForm.page"
+                                        :page-sizes="[1, 8, 16, 32, 48]"
+                                        :page-size="searchForm.rows"
+                                        :total="totalCount"
+                                        layout="total, sizes, prev, pager, next, jumper"
+                                        @size-change="handleSizeChange"
+                                        @current-change="handleCurrentChange"/>
+                            </div>
+
+                            <!-- 弹出框 -->
+                            <el-dialog :title="title" :visible.sync="dialogVisible">
+                                <el-table :data="tableDetailData" height="380" border style="width: 100%">
+                                    <el-table-column type="index" align="center" min-width="60"/>
+                                    <el-table-column prop="columnName" label="字段名" align="center" min-width="100" show-overflow-tooltip />
+                                    <el-table-column prop="columnComment" label="字段注释" align="center" min-width="150" show-overflow-tooltip />
+                                    <el-table-column prop="dataType" label="字段类型" align="center" min-width="70" show-overflow-tooltip />
+                                    <el-table-column prop="columnKey" label="字段属性" align="center" min-width="60" show-overflow-tooltip />
+                                    <el-table-column prop="extra" label="其他属性" align="center" min-width="100" show-overflow-tooltip />
+                                </el-table>
+                            </el-dialog>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:include="/common/common :: commonJS" th:remove="tag"></div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var myHome = new Vue({
+        el: '#app',
+        data: {
+            // 表格加载条控制
+            tableLoading: false,
+            // 按钮加载条控制
+            genLoading: false,
+            // Table数据
+            tableData: [],
+            // Table数据总条数
+            totalCount: 0,
+            // Table选择的数据
+            multipleSelection: [],
+            // 查询条件
+            searchForm: {
+                // 当前页
+                page: 1,
+                // 每页条数
+                rows: 8,
+                // 表名
+                tableName: ''
+            },
+            // 弹出框标题
+            title: '详细',
+            // 弹出框是否显示
+            dialogVisible: false,
+            // 弹出框数据
+            tableDetailData: []
+        },
+        // 启动时就执行
+        mounted: function() {
+            // 列表查询
+            this.list(this.searchForm)
+        },
+        methods: {
+            // 每页条数改变
+            handleSizeChange: function(rows) {
+                this.searchForm.rows = rows;
+                // console.log(this.searchForm.rows);
+                // 刷新列表
+                this.list(this.searchForm);
+            },
+            // 当前页数改变
+            handleCurrentChange: function(page) {
+                this.searchForm.page = page;
+                // 刷新列表
+                this.list(this.searchForm);
+            },
+            // 选择数据改变触发事件
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            // 列表查询
+            list: function(searchForm) {
+                // 加载显示
+                this.tableLoading = true;
+                axios.get('/database', {
+                    params: {
+                        page: this.searchForm.page,
+                        rows: this.searchForm.rows,
+                        tableName: this.searchForm.tableName
+                    }
+                }).then(res => {
+                    var data = res.data.data;
+                    // console.log(data);
+                    this.tableData = data.data;
+                    this.totalCount = data.count;
+                    this.tableLoading = false;
+                }).catch(err => {
+                    console.log(err);
+                    this.tableLoading = false;
+                    this.$message.error('查询失败');
+                });
+            },
+            // 调用子组件的preById方法
+            preByTableName: function(row) {
+                // this.$nextTick Dom渲染完执行
+                /* this.$nextTick(() => {
+                  this.$refs.listEdit.preById(userId)
+                }) */
+                this.title = row.tableName + '---' + row.tableComment + '---' + row.engine;
+                this.dialogVisible = true;
+                axios.get('/database/' + row.tableName).then(res => {
+                    var data = res.data.data;
+                    this.tableDetailData = data;
+                }).catch(err => {
+                    console.log(err);
+                    this.$message.error('查询失败');
+                });
+            },
+            // 生成代码到输出路径
+            genCode: function () {
+                if (this.multipleSelection.length <= 0) {
+                    this.$message.error('至少选择一条数据');
+                    return;
+                }
+                // 加载显示
+                this.genLoading = true;
+                var tableNames = '';
+                this.multipleSelection.forEach(function(el){
+                    tableNames = tableNames + el.tableName + '-'
+                });
+                axios.post('/database/' + tableNames).then(res => {
+                    var data = res.data;
+                    if(data.code == 200) {
+                        this.$message({
+                            message: data.msg,
+                            type: 'success'
+                        });
+                        this.$notify({
+                            dangerouslyUseHTMLString: true,
+                            title: '注意',
+                            message: '此文件输出路径为部署该应用的系统路径'
+                        });
+                        if (data.data) {
+                            this.$confirm('是否打开生成代码的文件夹?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning'
+                            }).then(() => {
+                                this.tableLoading = true;
+                                axios.get('/database/open').then(res => {
+                                    this.tableLoading = false;
+                                }).catch(err => {
+                                    this.$message.error('出现异常');
+                                    this.tableLoading = false;
+                                });
+                            }).catch(() => {
+                            });
+                        }
+                    } else {
+                        this.$message.error(data.msg);
+                    }
+                    // 加载关闭
+                    this.genLoading = false;
+                }).catch(err => {
+                    console.log(err);
+                    this.$message.error('出现异常');
+                    // 加载关闭
+                    this.genLoading = false;
+                });
+            },
+            // 生成代码为Zip文件下载
+            genCodeToZip: function () {
+                if (this.multipleSelection.length <= 0) {
+                    this.$message.error('至少选择一条数据');
+                    return;
+                }
+                // 加载显示
+                this.genLoading = true;
+                var tableNames = '';
+                this.multipleSelection.forEach(function(el){
+                    tableNames = tableNames + el.tableName + '-'
+                });
+                location.href = '/database/zip/' + tableNames;
+                // 加载关闭
+                setTimeout(() => {
+                    this.genLoading = false;
+                    this.$message({
+                        message: '生成代码成功',
+                        type: 'success'
+                    });
+                    /*this.$notify({
+                        title: '生成Zip文件的表',
+                        dangerouslyUseHTMLString: true,
+                        message: '<p>' + tableNames.replace(/\-/g,",") + '</p>'
+                    });*/
+                    this.$notify({
+                        title: '开始下载文件',
+                        dangerouslyUseHTMLString: true,
+                        message: '生成代码成功'
+                    });
+                }, 1111);
+            }
+        }
+    })
+    /*]]>*/
+</script>
+
+</body>
+
+</html>

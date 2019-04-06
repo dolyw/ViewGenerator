@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">后台模板</title>
+    <link rel="stylesheet" th:href="@{css/amazeui.css}"/>
+    <link rel="stylesheet" th:href="@{css/core.css}"/>
+    <link rel="stylesheet" th:href="@{css/menu.css}"/>
+    <link rel="stylesheet" th:href="@{css/index.css}"/>
+    <link rel="stylesheet" th:href="@{css/admin.css}"/>
+    <link rel="stylesheet" th:href="@{css/page/typography.css}"/>
+    <link rel="stylesheet" th:href="@{css/page/form.css}"/>
+    <link rel="stylesheet" th:href="@{css/component.css}"/>
+    <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+    <style>
+        body .el-table th.gutter {
+            display: table-cell!important;
+        }
+
+        label {
+            font-weight: 700;
+        }
+    </style>
+    <!-- 引入Vue，Element UI，Axios，Moment -->
+    <link rel="stylesheet" th:href="@{https://unpkg.com/element-ui/lib/theme-chalk/index.css}">
+    <script th:src="@{https://cdn.staticfile.org/vue/2.5.22/vue.min.js}"></script>
+    <script th:src="@{https://unpkg.com/element-ui/lib/index.js}"></script>
+    <script th:src="@{https://cdn.staticfile.org/axios/0.18.0/axios.min.js}"></script>
+    <script th:src="@{https://cdn.staticfile.org/moment.js/2.24.0/moment.min.js}"></script>
+</head>
+
+<div th:fragment="commonJS">
+    <script type="text/javascript" th:src="@{js/jquery-2.1.0.js}"></script>
+    <script type="text/javascript" th:src="@{js/amazeui.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/blockUI.js}"></script>
+</div>
+
+<!-- 头部 -->
+<header th:fragment="header(title)">
+    <div class="am-topbar am-topbar-fixed-top">
+    <div class="am-topbar-left am-hide-sm-only">
+        <a href="index.shtml" class="logo"><span>Gen<span>erator</span></span><i class="zmdi zmdi-layers"></i></a>
+    </div>
+
+    <div class="contain">
+        <ul class="am-nav am-navbar-nav am-navbar-left">
+            <li><h4 class="page-title" th:text="${title}"></h4></li>
+        </ul>
+        <ul class="am-nav am-navbar-nav am-navbar-right">
+            <li class="inform"><i class="el-icon-bell"></i></li>
+            <li class="hidden-xs am-hide-sm-only">
+                <form role="search" class="app-search">
+                    <input type="text" placeholder="Search..." class="form-control">
+                    <input type="text" style="display: none;" placeholder="Search..." class="form-control">
+                    <a><i class="el-icon-search"></i></a>
+                </form>
+            </li>
+        </ul>
+    </div>
+    </div>
+</header>
+
+<!-- 导航栏 -->
+<div th:fragment="sidebar">
+<div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+        <!-- User -->
+        <div class="user-box am-hide-sm-only">
+            <div class="user-img">
+                <a href="https://wang64.cn" target="_blank">
+                    <img src="img/avatar-1.jpg" alt="user-img" title="每天看着励志的语录却过着颓废的人生"
+                         class="img-circle img-thumbnail img-responsive">
+                </a>
+                <div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
+            </div>
+            <h5><a href="https://wang64.cn" target="_blank" title="每天看着励志的语录却过着颓废的人生">随心</a></h5>
+            <ul class="list-inline">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="text-custom">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- End User -->
+        <ul class="am-list admin-sidebar-list">
+
+            <li><a href="index.shtml"><i class="el-icon-news"></i>&nbsp;&nbsp;<b>首页</b></a></li>
+            <li><a href="table.shtml"><i class="el-icon-printer"></i>&nbsp;&nbsp;<b>代码生成</b></a></li>
+            <li><a href="config.shtml"><i class="el-icon-edit-outline"></i>&nbsp;&nbsp;<b>配置更新</b></a></li>
+
+            <!--<li class="admin-parent">
+                <a class="am-cf" data-am-collapse="{target: '#collapse-nav1'}"><span class="am-icon-table"></span>
+                    表格 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav1">
+                    <li><a href="html/table_basic.html" class="am-cf"> 基本表格</span></a></li>
+                    <li><a href="html/table_complete.html">完整表格</a></li>
+                </ul>
+            </li>
+            <li class="admin-parent">
+                <a class="am-cf" data-am-collapse="{target: '#collapse-nav2'}"><i class="am-icon-line-chart"
+                                                                                  aria-hidden="true"></i> 统计图表 <span
+                        class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav2">
+                    <li><a href="html/chart_line.html" class="am-cf"> 折线图</span></a></li>
+                    <li><a href="html/chart_columnar.html" class="am-cf"> 柱状图</span></a></li>
+                    <li><a href="html/chart_pie.html" class="am-cf"> 饼状图</span></a></li>
+                </ul>
+            </li>
+            <li class="admin-parent">
+                <a class="am-cf" data-am-collapse="{target: '#collapse-nav5'}"><span class="am-icon-file"></span> 表单
+                    <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+                <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav5">
+                    <li><a href="html/form_basic.html" class="am-cf"> 基本表单</a></li>
+                    <li><a href="html/form_validate.html">表单验证</a></li>
+                </ul>
+            </li>-->
+        </ul>
+    </div>
+</div>
+</div>
+
+</html>

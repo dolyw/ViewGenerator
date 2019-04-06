@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/common/common :: head('配置更新')"></head>
+<style>
+    .el-input {
+        position: relative;
+        font-size: 14px;
+        display: inline-block;
+        width: 80%;
+    }
+</style>
+
+<body>
+
+<header th:include="/common/common :: header('配置更新')"></header>
+
+<div class="admin">
+
+    <div th:include="/common/common :: sidebar"></div>
+
+    <div class="content-page">
+        <div class="content">
+
+            <div class="am-g">
+                <!-- Row start -->
+                <div class="am-u-md-6">
+                    <div class="card-box">
+                        <h5 class="header-title m-t-0 m-b-30">配置</h5>
+                        <div id="app">
+                            <!-- 表单 -->
+                            <el-form v-loading="submitLoading" ref="generator" :model="generator" :rules="generatorRules" size="small" label-width="200px">
+                                <el-form-item label="outRoot" prop="outRoot">
+                                    <el-input v-model.trim="generator.outRoot" placeholder="请输入outRoot"/>
+                                </el-form-item>
+
+                                <el-form-item label="template" prop="template">
+                                    <el-input v-model.trim="generator.template" placeholder="请输入template"/>
+                                </el-form-item>
+
+                                <el-form-item label="tableRemovePrefixes">
+                                    <el-input v-model.trim="generator.tableRemovePrefixes" placeholder="请输入tableRemovePrefixes"/>
+                                </el-form-item>
+
+                                <el-form-item label="basepackage" prop="basepackage">
+                                    <el-input v-model.trim="generator.basepackage" placeholder="请输入basepackage"/>
+                                </el-form-item>
+
+                                <el-form-item label="commonspackage" prop="commonspackage">
+                                    <el-input v-model.trim="generator.commonspackage" placeholder="请输入commonspackage"/>
+                                </el-form-item>
+
+                                <el-form-item label="namespace" prop="namespace">
+                                    <el-input v-model.trim="generator.namespace" placeholder="请输入namespace"/>
+                                </el-form-item>
+
+                                <el-form-item label="modulepackage" prop="modulepackage">
+                                    <el-input v-model.trim="generator.modulepackage" placeholder="请输入modulepackage"/>
+                                </el-form-item>
+
+                                <el-form-item>
+                                    <el-button type="primary" icon="el-icon-refresh" @click="list">刷新</el-button>
+                                    <el-button type="danger" icon="el-icon-setting" @click="setGen">设置</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-u-md-6">
+                    <div class="card-box">
+                        <h5 class="header-title m-t-0 m-b-30">说明</h5>
+                        <div id="ex">
+                            <el-collapse v-model="activeNames" accordion>
+                                <el-collapse-item name="1">
+                                    <template slot="title">
+                                        <b class="title">outRoot</b>
+                                    </template>
+                                    <div>代码生成的文件输出路径(路径为部署应用系统下)，示例: 绝对路径(E:/work/outRoot) 相对路径(/src/main)</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="2">
+                                    <template slot="title">
+                                        <b class="title">template</b>
+                                    </template>
+                                    <div>模板代码位置，示例: 相对路径(/src/main/resources/template/two/RESTful)</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="3">
+                                    <template slot="title">
+                                        <b class="title">tableRemovePrefixes</b>
+                                    </template>
+                                    <div>生成代码需要移除的表名前缀，例如t_user变User类则配置t_，使用逗号分隔同时配置多个前缀，示例: table_,t_(不能有空格)</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="4">
+                                    <template slot="title">
+                                        <b class="title">basepackage</b>
+                                    </template>
+                                    <div>模板代码的basepackage属性，示例: com.example</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="5">
+                                    <template slot="title">
+                                        <b class="title">commonspackage</b>
+                                    </template>
+                                    <div>模板代码的commonspackage属性，示例: com.example</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="6">
+                                    <template slot="title">
+                                        <b class="title">namespace</b>
+                                    </template>
+                                    <div>模板代码的namespace属性，示例: view</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="7">
+                                    <template slot="title">
+                                        <b class="title">modulepackage</b>
+                                    </template>
+                                    <div>模板代码的modulepackage属性，示例: generator</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="8">
+                                    <template slot="title">
+                                        <b class="title">更多配置</b>
+                                    </template>
+                                    <div>更多配置请自行修改项目配置文件/src/main/resources/config/generator.properties</div>
+                                </el-collapse-item>
+                            </el-collapse>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:include="/common/common :: commonJS" th:remove="tag"></div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var myHome = new Vue({
+        el: '#app',
+        data: {
+            // 加载条控制
+            submitLoading: false,
+            // 按钮加载条控制
+            genLoading: false,
+            // 数据
+            generator: {
+                // 是读取还是写入
+                isRead: true,
+                // 代码生成的文件输出路径
+                outRoot: '',
+                // 模板代码位置
+                template: '',
+                // 生成代码需要移除的表名前缀
+                tableRemovePrefixes: '',
+                // 模板代码的basepackage属性
+                basepackage: '',
+                // 模板代码的commonspackage属性
+                commonspackage: '',
+                // 模板代码的namespace属性
+                namespace: '',
+                // 模板代码的modulepackage属性
+                modulepackage: ''
+
+            },
+            // 表单检验规则
+            generatorRules: {
+                outRoot: [
+                    { required: true, message: '请输入outRoot', trigger: 'blur' }
+                ],
+                template: [
+                    { required: true, message: '请输入template', trigger: 'blur' }
+                ],
+                tableRemovePrefixes: [
+                    { required: true, message: '请输入tableRemovePrefixes', trigger: 'blur' }
+                ],
+                basepackage: [
+                    { required: true, message: '请输入basepackage', trigger: 'blur' }
+                ],
+                commonspackage: [
+                    { required: true, message: '请输入commonspackage', trigger: 'blur' }
+                ],
+                namespace: [
+                    { required: true, message: '请输入namespace', trigger: 'blur' }
+                ],
+                modulepackage: [
+                    { required: true, message: '请输入modulepackage', trigger: 'blur' }
+                ]
+            }
+        },
+        // 启动时就执行
+        mounted: function() {
+            // 列表查询
+            this.list(this.searchForm)
+        },
+        methods: {
+            // 列表查询
+            list: function() {
+                // 加载显示
+                this.submitLoading = true;
+                this.generator.isRead = true;
+                axios.put('/database/config', this.generator).then(res => {
+                    var data = res.data.data;
+                    this.generator = data;
+                    setTimeout(() => {
+                        this.submitLoading = false;
+                    }, 666);
+                }).catch(err => {
+                    console.log(err.response);
+                    this.submitLoading = false;
+                    this.$message.error('查询失败');
+                });
+            },
+            // 更新属性
+            setGen: function() {
+                this.$refs.generator.validate((valid) => {
+                    // 加载显示
+                    this.submitLoading = true;
+                    console.log(valid)
+                    if (valid) {
+                        this.generator.isRead = false;
+                        axios.put('/database/config', this.generator).then(res => {
+                            var data = res.data;
+                            this.generator = data.data;
+                            setTimeout(() => {
+                                this.submitLoading = false;
+                                this.$message({
+                                    message: data.msg,
+                                    type: 'success'
+                                });
+                            }, 2666);
+                        }).catch(err => {
+                                console.log(err.response);
+                            this.submitLoading = false;
+                            this.$message.error('出现异常');
+                        });
+                    } else {
+                        this.submitLoading = false;
+                    }
+                });
+            }
+        }
+    });
+
+    var myEx = new Vue({
+        el: '#ex',
+        data: {
+            activeNames: ['1']
+        }
+    })
+    /*]]>*/
+</script>
+</body>
+
+</html>
