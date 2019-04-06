@@ -31,24 +31,35 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper + Thymeleaf(Amaze UI(布局) + 
 
 1. 配置resource下config/generator.properties数据库信息
 2. 模板提供两套示例LayUI和RESTful，自行添加模板路径src\test\resources\template\two
-3. 运行项目src\main\java\com\example\Application.java即可，访问http://localhost:8080，可以在线设置生成代码的配置
+3. 运行项目src\main\java\com\example\Application.java即可，访问[http://localhost:8080](http://localhost:8080)，可以在线设置生成代码的配置
 
 #### 使用说明
 
-1. 数据库要配置好，且必须有帐号权限(resource下config/generator.properties数据库信息)
-2. 启动首页界面如下
+```
+数据库要配置好，且必须有帐号权限(resource下config/generator.properties数据库信息)
+```
+
+##### 系统预览
+```
+启动首页界面
+```
 ![image text](https://docs.wang64.cn/Project/SpringBootGenerator/image/20190406001.png)
-3. 生成代码界面如下
+```
+生成代码界面如下
+```
 ![image text](https://docs.wang64.cn/Project/SpringBootGenerator/image/20190406002.png)
-4. 查看表详细信息界面如下
+```
+查看表详细信息界面如下
+```
 ![image text](https://docs.wang64.cn/Project/SpringBootGenerator/image/20190406003.png)
-5. 配置更新界面如下
+```
+配置更新界面如下
+```
 ![image text](https://docs.wang64.cn/Project/SpringBootGenerator/image/20190406004.png)
 
 #### 搭建参考
 
-1. 感谢:[https://blog.csdn.net/bruce128/article/details/79072260](https://blog.csdn.net/bruce128/article/details/79072260)
-2. 感谢zeng1994的Java实现将文件或者文件夹压缩成zip:[https://www.cnblogs.com/zeng1994/p/7862288.html](https://www.cnblogs.com/zeng1994/p/7862288.html)
+1. 感谢zeng1994的Java实现将文件或者文件夹压缩成zip:[https://www.cnblogs.com/zeng1994/p/7862288.html](https://www.cnblogs.com/zeng1994/p/7862288.html)
 
 #### 参与贡献
 
