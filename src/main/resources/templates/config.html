@@ -218,6 +218,11 @@
                     this.submitLoading = true;
                     console.log(valid)
                     if (valid) {
+                        this.$notify({
+                            dangerouslyUseHTMLString: true,
+                            title: '请等待',
+                            message: '配置更新会导致应用热重启'
+                        });
                         this.generator.isRead = false;
                         axios.put('/database/config', this.generator).then(res => {
                             var data = res.data;
@@ -228,7 +233,7 @@
                                     message: data.msg,
                                     type: 'success'
                                 });
-                            }, 2666);
+                            }, 3033);
                         }).catch(err => {
                                 console.log(err.response);
                             this.submitLoading = false;
