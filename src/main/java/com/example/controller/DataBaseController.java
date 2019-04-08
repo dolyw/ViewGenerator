@@ -16,6 +16,7 @@ import com.example.util.ZipUtil;
 import com.generator.CustomGeneratorFacade;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class DataBaseController {
 
     /**
      * 列表
-     * @author Generator
+     * @author Wang926454
      * @date 2019-04-05 18:00:26
      */
     @GetMapping
@@ -81,7 +82,7 @@ public class DataBaseController {
         map.put("tableName", tableName);
         PageHelper.startPage(page, rows);
         List<Map<String, Object>> list = generatorDao.queryList(map);
-        if (list == null || list.size() <= 0) {
+        if (list == null) {
             throw new CustomException("查询失败(Query Failure)");
         }
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
@@ -92,8 +93,28 @@ public class DataBaseController {
     }
 
     /**
+     * 获取所有表名
+     * @author Wang926454
+     * @date 2019-04-08 16:00:26
+     */
+    @GetMapping("/tableNames/all")
+    public ResponseBean all() {
+        // 获取所有表名
+        List<Map<String, Object>> list = generatorDao.queryList(null);
+        for (Map<String, Object> map : list) {
+            if (StringUtils.isNoneBlank(map.get("tableComment").toString())) {
+                map.put("label", map.get("tableName") + "---" + map.get("tableComment") + "---" + map.get("engine"));
+            } else {
+                map.put("label", map.get("tableName") + "---" + map.get("engine"));
+            }
+            map.put("value", map.get("tableName"));
+        }
+        return new ResponseBean(HttpStatus.OK.value(), "查询成功", list);
+    }
+
+    /**
      * 表详细字段信息
-     * @author Generator
+     * @author Wang926454
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/{tableName}")
@@ -106,30 +127,8 @@ public class DataBaseController {
     }
 
     /**
-     * 打开Windows的代码输出文件夹
-     * @author Generator
-     * @date 2019-04-05 18:00:26
-     */
-    @GetMapping("/open")
-    public ResponseBean open() {
-        try {
-            // 有:应该是全路径
-            String[] array = outRoot.split(":");
-            if (array.length - 1 >= 0) {
-                Runtime.getRuntime().exec("cmd.exe /c start " + outRoot);
-            } else {
-                // 项目在硬盘上的基础路径
-                Runtime.getRuntime().exec("cmd.exe /c start " + System.getProperty("user.dir") + outRoot);
-            }
-        } catch (IOException e) {
-            throw new SystemException("操作失败");
-        }
-        return new ResponseBean(HttpStatus.OK.value(), "操作成功", null);
-    }
-
-    /**
      * 生成代码到输出路径
-     * @author Generator
+     * @author Wang926454
      * @date 2019-04-05 18:00:26
      */
     @PostMapping("/{tableName}")
@@ -164,7 +163,7 @@ public class DataBaseController {
 
     /**
      * 生成代码为Zip文件下载
-     * @author Generator
+     * @author Wang926454
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/zip/{tableName}")
@@ -201,35 +200,30 @@ public class DataBaseController {
     }
 
     /**
-     * 通过表名称生成代码
-     * @param tableNames
+     * 打开Windows系统的代码输出文件夹
+     * @author Wang926454
+     * @date 2019-04-05 18:00:26
      */
-    public boolean genCode(String[] tableNames, String outRoot) throws IOException {
-        GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRoot);
-        // 配置信息
-        GeneratorProperties.load(new String[]{ "classpath:config/generator.properties" });
-        // 模板位置
-        Generator generator = generatorFacade.getGenerator();
-        generator.addTemplateRootDir(Constant.PROJECT_PATH + template);
-        // 开始执行
+    @GetMapping("/open")
+    public ResponseBean open() {
         try {
-            for (String tableName : tableNames) {
-                // 删除旧文件
-                generatorFacade.deleteByTable(tableName);
-                // 生成新文件
-                generatorFacade.generateByTable(tableName);
+            // 有:应该是全路径
+            String[] array = outRoot.split(":");
+            if (array.length - 1 >= 0) {
+                Runtime.getRuntime().exec("cmd.exe /c start " + outRoot);
+            } else {
+                // 项目在硬盘上的基础路径
+                Runtime.getRuntime().exec("cmd.exe /c start " + System.getProperty("user.dir") + outRoot);
             }
-        } catch (Exception e) {
-            System.out.println("----- 生成失败 请检查数据库是否连接正常及表名是否正确以及权限是否缺失 -----");
-            e.printStackTrace();
-            return false;
+        } catch (IOException e) {
+            throw new SystemException("操作失败");
         }
-        return true;
+        return new ResponseBean(HttpStatus.OK.value(), "操作成功", null);
     }
 
     /**
      * 读取更新配置文件generator.properties
-     * @author Generator
+     * @author Wang926454
      * @date 2019-04-05 18:00:26
      */
     @PutMapping("/config")
@@ -256,7 +250,14 @@ public class DataBaseController {
                         Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
                         while (entries.hasNext()) {
                             Map.Entry<String, String> entry = entries.next();
-                            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+                            if (Constant.TEMPLATE.equals(entry.getKey())) {
+                                // 查看配置路径下macro.includ文件是否存在
+                                File file = new File(Constant.PROJECT_PATH + entry.getValue() + "/macro.include");
+                                if (!file.exists()) {
+                                    // 模板代码位置不存在
+                                    return new ResponseBean(HttpStatus.BAD_REQUEST.value(), "当前填写的模板代码位置不存在", null);
+                                }
+                            }
                             safeProperties.setProperty(entry.getKey(), entry.getValue());
                         }
                         output = new FileOutputStream(url.getPath());
@@ -277,6 +278,38 @@ public class DataBaseController {
             throw new SystemException("操作失败");
         }
         return new ResponseBean(HttpStatus.OK.value(), "操作成功", map);
+    }
+
+    /**
+     * 通过表名生成代码
+     * @param tableNames 表名数组
+	 * @param outRoot 代码输出文件夹
+     * @throws IOException
+     * @return boolean
+     * @author Wang926454
+     * @date 2019/4/8 17:19
+     */
+    public boolean genCode(String[] tableNames, String outRoot) throws IOException {
+        GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRoot);
+        // 配置信息
+        GeneratorProperties.load(new String[]{ "classpath:config/generator.properties" });
+        // 模板位置
+        Generator generator = generatorFacade.getGenerator();
+        generator.addTemplateRootDir(Constant.PROJECT_PATH + template);
+        // 开始执行
+        try {
+            for (String tableName : tableNames) {
+                // 删除旧文件
+                generatorFacade.deleteByTable(tableName);
+                // 生成新文件
+                generatorFacade.generateByTable(tableName);
+            }
+        } catch (Exception e) {
+            System.out.println("----- 生成失败 请检查数据库是否连接正常及表名是否正确以及权限是否缺失 -----");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }

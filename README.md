@@ -53,9 +53,13 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper + Thymeleaf(Amaze UI(布局) + 
 ```
 ![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406003.png)
 ```
-配置更新界面如下
+输入表名生成代码界面如下
 ```
 ![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406004.png)
+```
+配置更新界面如下
+```
+![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406005.png)
 
 #### 搭建参考
 

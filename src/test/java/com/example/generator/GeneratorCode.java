@@ -41,7 +41,7 @@ public class GeneratorCode extends BaseTest {
      */
     public static void main(String[] args) throws Exception {
         // 配置表名
-        genCode("t_gen_user", "role");
+        genCode("user", "role");
     }
 
     /**

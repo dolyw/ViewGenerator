@@ -17,4 +17,9 @@ public interface Constant {
      */
     String COLON = ":";
 
+    /**
+     * 模板
+     */
+    String TEMPLATE = "template";
+
 }

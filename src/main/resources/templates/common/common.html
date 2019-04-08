@@ -15,6 +15,12 @@
     <link rel="stylesheet" th:href="@{css/component.css}"/>
     <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
     <style>
+        /* elementUI的确认弹出框时页面右侧缩小5px的解决方法 */
+        body {
+            padding-right:0 !important;
+        }
+
+        /* elementUI的Table表头错位的解决方法 */
         body .el-table th.gutter {
             display: table-cell!important;
         }
@@ -94,7 +100,7 @@
         <ul class="am-list admin-sidebar-list">
 
             <li><a href="index.shtml"><i class="el-icon-news"></i>&nbsp;&nbsp;<b>首页</b></a></li>
-            <li><a href="table.shtml"><i class="el-icon-printer"></i>&nbsp;&nbsp;<b>代码生成</b></a></li>
+            <li><a href="table.shtml"><i class="el-icon-printer"></i>&nbsp;&nbsp;<b>生成代码</b></a></li>
             <li><a href="config.shtml"><i class="el-icon-edit-outline"></i>&nbsp;&nbsp;<b>配置更新</b></a></li>
 
             <!--<li class="admin-parent">
