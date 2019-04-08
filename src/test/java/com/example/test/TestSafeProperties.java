@@ -1,6 +1,5 @@
 package com.example.test;
 
-import cn.org.rapid_framework.generator.GeneratorProperties;
 import com.example.base.BaseTest;
 import com.example.util.SafeProperties;
 import org.junit.Test;

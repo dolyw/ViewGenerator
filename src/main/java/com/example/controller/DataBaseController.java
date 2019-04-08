@@ -204,8 +204,8 @@ public class DataBaseController {
      * 通过表名称生成代码
      * @param tableNames
      */
-    public boolean genCode(String[] tableNames, String outRootDir) throws IOException {
-        GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRootDir);
+    public boolean genCode(String[] tableNames, String outRoot) throws IOException {
+        GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRoot);
         // 配置信息
         GeneratorProperties.load(new String[]{ "classpath:config/generator.properties" });
         // 模板位置

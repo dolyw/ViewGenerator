@@ -10,6 +10,12 @@ import cn.org.rapid_framework.generator.util.StringHelper;
  */
 public class CustomGeneratorFacade extends GeneratorFacade {
 
+    /**
+     * CustomGeneratorFacade
+     * @param outRootDir
+     * @author Wang926454
+     * @date 2019/4/8 9:27
+     */
     public CustomGeneratorFacade(String outRootDir) {
         if (StringHelper.isNotBlank(outRootDir)) {
             super.getGenerator().setOutRootDir(outRootDir);
