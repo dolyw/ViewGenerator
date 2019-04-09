@@ -10,7 +10,7 @@ import ${basepackage}.dto.custom.${className}Dto;
 
 /**
  * ${className}Service
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 public interface ${className}Service extends IBaseService<${className}Dto> {
@@ -19,7 +19,7 @@ public interface ${className}Service extends IBaseService<${className}Dto> {
      * 列表
      * @param ${classNameLower}Dto
      * @return java.util.List<${basepackage}.dto.custom.${className}Dto;>
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     public PageInfo<${className}Dto> findPageInfo(int page, int rows, ${className}Dto ${classNameLower}Dto, String orderBy);

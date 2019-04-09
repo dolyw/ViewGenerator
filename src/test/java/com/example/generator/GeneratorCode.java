@@ -35,7 +35,7 @@ public class GeneratorCode extends BaseTest {
 
     /**
      * 有三点需要引起特别的注意
-     * (1)数据库连接必须配置
+     * (1)配置resource下config/generator.properties数据库信息
      * (2)表无主键，无法生成
      * (3)外键关联的表无读权限，无法生成
      */

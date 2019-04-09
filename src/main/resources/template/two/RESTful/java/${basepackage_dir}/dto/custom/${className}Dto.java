@@ -10,7 +10,7 @@ import ${basepackage}.dto.domain.${className}DtoBase;
 
 /**
  * ${className}Dto
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 @Table(name = "${table.sqlName}")

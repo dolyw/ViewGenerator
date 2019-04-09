@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * ${className}DtoBase
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 public class ${className}DtoBase implements Serializable {

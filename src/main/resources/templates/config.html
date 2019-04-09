@@ -42,6 +42,10 @@
                                     <el-input v-model.trim="generator.tableRemovePrefixes" placeholder="请输入tableRemovePrefixes"/>
                                 </el-form-item>
 
+                                <el-form-item label="author" prop="author">
+                                    <el-input v-model.trim="generator.author" placeholder="请输入author"/>
+                                </el-form-item>
+
                                 <el-form-item label="basepackage" prop="basepackage">
                                     <el-input v-model.trim="generator.basepackage" placeholder="请输入basepackage"/>
                                 </el-form-item>
@@ -92,29 +96,35 @@
                                 </el-collapse-item>
                                 <el-collapse-item title="template" name="4">
                                     <template slot="title">
+                                        <b class="title">author</b>
+                                    </template>
+                                    <div>模板代码的author属性(注释的作者名称)，示例: Wang926454</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="5">
+                                    <template slot="title">
                                         <b class="title">basepackage</b>
                                     </template>
                                     <div>模板代码的basepackage属性，示例: com.example</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="5">
+                                <el-collapse-item title="template" name="6">
                                     <template slot="title">
                                         <b class="title">commonspackage</b>
                                     </template>
                                     <div>模板代码的commonspackage属性，示例: com.example</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="6">
+                                <el-collapse-item title="template" name="7">
                                     <template slot="title">
                                         <b class="title">namespace</b>
                                     </template>
                                     <div>模板代码的namespace属性，示例: view</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="7">
+                                <el-collapse-item title="template" name="8">
                                     <template slot="title">
                                         <b class="title">modulepackage</b>
                                     </template>
                                     <div>模板代码的modulepackage属性，示例: generator</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="8">
+                                <el-collapse-item title="template" name="9">
                                     <template slot="title">
                                         <b class="title">更多配置</b>
                                     </template>
@@ -153,6 +163,8 @@
                 template: '',
                 // 生成代码需要移除的表名前缀
                 tableRemovePrefixes: '',
+                // 模板代码的author属性
+                author: '',
                 // 模板代码的basepackage属性
                 basepackage: '',
                 // 模板代码的commonspackage属性
@@ -173,6 +185,9 @@
                 ],
                 tableRemovePrefixes: [
                     { required: true, message: '请输入tableRemovePrefixes', trigger: 'blur' }
+                ],
+                author: [
+                    { required: true, message: '请输入author', trigger: 'blur' }
                 ],
                 basepackage: [
                     { required: true, message: '请输入basepackage', trigger: 'blur' }
@@ -225,7 +240,7 @@
                                 this.$notify({
                                     dangerouslyUseHTMLString: true,
                                     title: '请等待',
-                                    message: '配置更新会导致应用热重启'
+                                    message: '<b>配置更新会导致应用热重启</b>'
                                 });
                                 this.generator = data.data;
                                 setTimeout(() => {
@@ -236,11 +251,6 @@
                                     });
                                 }, 3033);
                             } else {
-                                this.$notify({
-                                    dangerouslyUseHTMLString: true,
-                                    title: '提示',
-                                    message: data.msg
-                                });
                                 this.$message.error(data.msg);
                                 this.submitLoading = false;
                             }

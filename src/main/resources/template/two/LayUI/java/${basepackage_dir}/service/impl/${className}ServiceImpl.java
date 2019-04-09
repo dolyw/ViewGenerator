@@ -19,7 +19,7 @@ import ${basepackage}.service.${className}Service;
 
 /**
  * ${className}ServiceImpl
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 @Service("${classNameLower}Service")

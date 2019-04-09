@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * ${className}Controller
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 @RestController
@@ -39,7 +39,7 @@ public class ${className}Controller {
 
     /**
      * 列表
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @GetMapping
@@ -62,7 +62,7 @@ public class ${className}Controller {
 
     /**
      * 查询
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @GetMapping("/{id}")
@@ -76,7 +76,7 @@ public class ${className}Controller {
 
     /**
      * 新增
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @PostMapping
@@ -91,7 +91,7 @@ public class ${className}Controller {
 
     /**
      * 更新
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @PutMapping
@@ -106,7 +106,7 @@ public class ${className}Controller {
 
     /**
      * 删除
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @DeleteMapping("/{id}")

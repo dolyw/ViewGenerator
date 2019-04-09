@@ -22,7 +22,7 @@ import ${commonspackage}.dto.BaseDto;
 
 /**
  * ${className}DtoBase
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 public class ${className}DtoBase extends BaseDto implements Serializable {

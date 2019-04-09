@@ -13,7 +13,7 @@
 ----|------|----
 SpringBoot1.5(第一版) | Test类生成代码  | [https://github.com/wang926454/SpringBootGenerator/releases](https://github.com/wang926454/SpringBootGenerator/releases)
 SpringBoot2.1(第二版) | Test类生成代码  | [https://github.com/wang926454/SpringBootGenerator/releases](https://github.com/wang926454/SpringBootGenerator/releases)
-SpringBoot1.5(第三版) | 可视化界面生成代码  | 当前
+SpringBoot1.5(第三版) | 可视化界面或Test类两种  | 当前
 
 #### 项目介绍
 
@@ -29,9 +29,9 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper + Thymeleaf(Amaze UI(布局) + 
 
 #### 安装教程
 
-1. 配置resource下config/generator.properties数据库信息
+1. 配置resource下config/generator.properties数据库信息，Test类在src\test\java\com\example\generator\GeneratorCode
 2. 模板提供两套示例LayUI和RESTful，自行添加模板路径src\test\resources\template\two
-3. 运行项目src\main\java\com\example\Application.java即可，访问[http://localhost:8080](http://localhost:8080)，可以在线设置生成代码的配置
+3. 可视化界面操作运行项目src\main\java\com\example\Application.java即可，访问[http://localhost:8080](http://localhost:8080)，可以在线设置生成代码的配置
 
 #### 使用说明
 

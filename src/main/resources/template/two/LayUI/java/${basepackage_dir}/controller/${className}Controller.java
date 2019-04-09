@@ -27,7 +27,7 @@ import ${basepackage}.service.${className}Service;
 
 /**
  * ${className}Controller
- * @author Generator
+ * @author ${author}
  * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
  */
 @Controller
@@ -39,7 +39,7 @@ public class ${className}Controller {
 
     /**
      * 主页面
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @RequestMapping
@@ -49,7 +49,7 @@ public class ${className}Controller {
 
     /**
      * 列表
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
@@ -66,7 +66,7 @@ public class ${className}Controller {
 
     /**
      * 预新增
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
@@ -80,7 +80,7 @@ public class ${className}Controller {
 
     /**
      * 新增
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
@@ -95,7 +95,7 @@ public class ${className}Controller {
 
     /**
      * 预修改
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
@@ -109,7 +109,7 @@ public class ${className}Controller {
 
     /**
      * 修改
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody
@@ -124,7 +124,7 @@ public class ${className}Controller {
 
     /**
      * 删除
-     * @author Generator
+     * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
     @ResponseBody

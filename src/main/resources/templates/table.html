@@ -180,6 +180,13 @@
             }
             if (this.isLocalhost) {
 
+            } else {
+                this.$notify({
+                    dangerouslyUseHTMLString: true,
+                    title: '当前环境判断为非本地运行环境',
+                    message: '<b>请谨慎使用生成代码到路径功能</b>',
+                    duration: 0
+                });
             }
         },
         methods: {
@@ -275,7 +282,7 @@
                     this.$notify({
                         dangerouslyUseHTMLString: true,
                         title: '注意',
-                        message: '输出路径为部署该应用的系统的路径'
+                        message: '<b>输出路径为部署该应用的系统的路径</b>'
                     });
                 }
                 // 加载显示
@@ -300,7 +307,7 @@
                     this.$notify({
                         dangerouslyUseHTMLString: true,
                         title: '注意',
-                        message: '输出路径为部署该应用的系统的路径'
+                        message: '<b>输出路径为部署该应用的系统的路径</b>'
                     });
                 }
                 // 加载显示
@@ -373,7 +380,7 @@
                     this.$notify({
                         title: '开始下载',
                         dangerouslyUseHTMLString: true,
-                        message: '压缩文件成功'
+                        message: '<b>压缩文件成功</b>'
                     });
                 }, 1111);
             }
