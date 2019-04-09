@@ -137,11 +137,11 @@
         </dependency>-->
 
         <!-- Commons-Lang3工具包 -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
-        </dependency>-->
+        </dependency>
 
         <!-- Commons-IO工具包 -->
         <dependency>
