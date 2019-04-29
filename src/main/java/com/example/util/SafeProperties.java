@@ -307,7 +307,6 @@ public class SafeProperties extends Properties {
         return super.put(key, value);
     }
 
-
     @Override
     public synchronized Object remove(Object key) {
         context.remove(key.toString());
@@ -417,7 +416,6 @@ public class SafeProperties extends Properties {
             }
         }
     }
-
 
     public void addComment(String comment) {
         if (comment != null) {

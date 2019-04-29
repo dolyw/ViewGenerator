@@ -101,13 +101,13 @@ public class DataBaseController {
     public ResponseBean all() {
         // 获取所有表名
         List<Map<String, Object>> list = generatorDao.queryList(null);
-        for (Map<String, Object> map : list) {
-            if (StringUtils.isNoneBlank(map.get("tableComment").toString())) {
-                map.put("label", map.get("tableName") + "---" + map.get("tableComment") + "---" + map.get("engine"));
+        for (Map<String, Object> table : list) {
+            if (StringUtils.isNoneBlank(table.get("tableComment").toString())) {
+                table.put("label", table.get("tableName") + "---" + table.get("tableComment") + "---" + table.get("engine"));
             } else {
-                map.put("label", map.get("tableName") + "---" + map.get("engine"));
+                table.put("label", table.get("tableName") + "---" + table.get("engine"));
             }
-            map.put("value", map.get("tableName"));
+            table.put("value", table.get("tableName"));
         }
         return new ResponseBean(HttpStatus.OK.value(), "查询成功", list);
     }
@@ -196,6 +196,8 @@ public class DataBaseController {
             IOUtils.write(data, response.getOutputStream());
             // 删除临时路径下所有临时文件
             FileUtils.deleteDirectory(tempDir);
+        } else {
+            throw new SystemException("生成失败，请检查数据库是否连接正常及表名是否正确以及权限是否缺失");
         }
     }
 
@@ -227,7 +229,7 @@ public class DataBaseController {
      * @date 2019-04-05 18:00:26
      */
     @PutMapping("/config")
-    public ResponseBean config(@RequestBody Map<String, String> map) {
+    public ResponseBean config(@RequestBody Map<String, String> config) {
         try {
             final Enumeration urls = DataBaseController.class.getClassLoader().getResources("config/generator.properties");
             while (urls.hasMoreElements()) {
@@ -239,15 +241,15 @@ public class DataBaseController {
                     con.setUseCaches(false);
                     input = con.getInputStream();
                     SafeProperties safeProperties = new SafeProperties();
-                    if (Boolean.parseBoolean(map.get("isRead"))) {
+                    if (Boolean.parseBoolean(config.get("isRead"))) {
                         // 读
                         safeProperties.load(input);
-                        map = (Map) safeProperties;
+                        config = (Map) safeProperties;
                     } else {
                         // 写
                         safeProperties.load(input);
                         // 遍历map写入
-                        Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
+                        Iterator<Map.Entry<String, String>> entries = config.entrySet().iterator();
                         while (entries.hasNext()) {
                             Map.Entry<String, String> entry = entries.next();
                             if (Constant.TEMPLATE.equals(entry.getKey())) {
@@ -277,7 +279,7 @@ public class DataBaseController {
         } catch (IOException e) {
             throw new SystemException("操作失败");
         }
-        return new ResponseBean(HttpStatus.OK.value(), "操作成功", map);
+        return new ResponseBean(HttpStatus.OK.value(), "操作成功", config);
     }
 
     /**
