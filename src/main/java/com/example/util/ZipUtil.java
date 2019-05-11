@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
  * ZipUtil
- * @author Wang926454
+ * @author dolyw.com
  * @date 2019/4/6 12:00
  */
 public class ZipUtil {

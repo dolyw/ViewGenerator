@@ -2,7 +2,7 @@ package com.example.constant;
 
 /**
  * 数据库类型
- * @author Wang926454
+ * @author dolyw.com
  * @date 2019/4/6 19:53
  */
 public enum DataBaseEnum {

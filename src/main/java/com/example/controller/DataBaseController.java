@@ -1,6 +1,6 @@
 /*
- * PDMS wliduo https://github.com/wang926454
- * Created By Wang926454
+ * PDMS wliduo https://github.com/dolyw
+ * Created By dolyw.com
  * Date By (2019-04-05 18:00:26)
  */
 package com.example.controller;
@@ -67,7 +67,7 @@ public class DataBaseController {
 
     /**
      * 列表
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @GetMapping
@@ -94,7 +94,7 @@ public class DataBaseController {
 
     /**
      * 获取所有表名
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-08 16:00:26
      */
     @GetMapping("/tableNames/all")
@@ -114,7 +114,7 @@ public class DataBaseController {
 
     /**
      * 表详细字段信息
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/{tableName}")
@@ -128,7 +128,7 @@ public class DataBaseController {
 
     /**
      * 生成代码到输出路径
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @PostMapping("/{tableName}")
@@ -163,7 +163,7 @@ public class DataBaseController {
 
     /**
      * 生成代码为Zip文件下载
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/zip/{tableName}")
@@ -181,7 +181,7 @@ public class DataBaseController {
         }
         // 生成代码到临时路径
         if (genCode(tableNames, tempDir.getPath())) {
-            StringBuilder comment = new StringBuilder("项目地址：https://github.com/wang926454/SpringBootGenerator\r\n\r\n");
+            StringBuilder comment = new StringBuilder("项目地址：https://github.com/dolyw/ViewGenerator\r\n\r\n");
             for (String tempName : tableNames) {
                 comment.append(tempName + "\r\n");
             }
@@ -203,7 +203,7 @@ public class DataBaseController {
 
     /**
      * 打开Windows系统的代码输出文件夹
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/open")
@@ -225,7 +225,7 @@ public class DataBaseController {
 
     /**
      * 读取更新配置文件generator.properties
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019-04-05 18:00:26
      */
     @PutMapping("/config")
@@ -288,7 +288,7 @@ public class DataBaseController {
 	 * @param outRoot 代码输出文件夹
      * @throws IOException
      * @return boolean
-     * @author Wang926454
+     * @author dolyw.com
      * @date 2019/4/8 17:19
      */
     public boolean genCode(String[] tableNames, String outRoot) throws IOException {

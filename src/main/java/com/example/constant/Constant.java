@@ -2,7 +2,7 @@ package com.example.constant;
 
 /**
  * Constant
- * @author Wang926454
+ * @author dolyw.com
  * @date 2019/4/6 19:50
  */
 public interface Constant {

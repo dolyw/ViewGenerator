@@ -9,7 +9,7 @@ import java.util.Properties;
 /**
  * SafeProperties
  *
- * @author Wang926454
+ * @author dolyw.com
  * @date 2019/4/5 21:20
  */
 public class SafeProperties extends Properties {

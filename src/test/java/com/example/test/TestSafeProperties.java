@@ -12,7 +12,7 @@ import java.util.Enumeration;
 
 /**
  * 参考https://blog.csdn.net/xiaosemei/article/details/77334677
- * @author Wang926454
+ * @author dolyw.com
  * @date 2018/11/15 17:13
  */
 public class TestSafeProperties extends BaseTest {

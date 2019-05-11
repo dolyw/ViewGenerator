@@ -1,9 +1,9 @@
 ## ViewGenerator
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/wang926454/SpringBootGenerator/pulls)
-[![GitHub stars](https://img.shields.io/github/stars/wang926454/SpringBootGenerator.svg?style=social&label=Stars)](https://github.com/wang926454/SpringBootGenerator)
-[![GitHub forks](https://img.shields.io/github/forks/wang926454/SpringBootGenerator.svg?style=social&label=Fork)](https://github.com/wang926454/SpringBootGenerator)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/dolyw/ViewGenerator/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/dolyw/ViewGenerator.svg?style=social&label=Stars)](https://github.com/dolyw/ViewGenerator)
+[![GitHub forks](https://img.shields.io/github/forks/dolyw/ViewGenerator.svg?style=social&label=Fork)](https://github.com/dolyw/ViewGenerator)
 
 > 可视化自定义模板代码生成系统
 
@@ -11,8 +11,8 @@
 
 版本 | 操作 | 链接
 ----|------|----
-SpringBoot1.5(第一版) | Test类生成代码  | [https://github.com/wang926454/SpringBootGenerator/releases](https://github.com/wang926454/SpringBootGenerator/releases)
-SpringBoot2.1(第二版) | Test类生成代码  | [https://github.com/wang926454/SpringBootGenerator/releases](https://github.com/wang926454/SpringBootGenerator/releases)
+SpringBoot1.5(第一版) | Test类生成代码  | [https://github.com/dolyw/ViewGenerator/releases](https://github.com/dolyw/ViewGenerator/releases)
+SpringBoot2.1(第二版) | Test类生成代码  | [https://github.com/dolyw/ViewGenerator/releases](https://github.com/dolyw/ViewGenerator/releases)
 SpringBoot1.5(第三版) | 可视化界面或Test类两种  | 当前
 
 #### 项目介绍
@@ -43,23 +43,23 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper + Thymeleaf(Amaze UI(布局) + 
 ```
 启动首页界面
 ```
-![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406001.png)
+![image text](https://docs.dolyw.com/Project/ViewGenerator/image/20190406001.png)
 ```
 生成代码界面如下
 ```
-![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406002.png)
+![image text](https://docs.dolyw.com/Project/ViewGenerator/image/20190406002.png)
 ```
 查看表详细信息界面如下
 ```
-![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406003.png)
+![image text](https://docs.dolyw.com/Project/ViewGenerator/image/20190406003.png)
 ```
 输入表名生成代码界面如下
 ```
-![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406004.png)
+![image text](https://docs.dolyw.com/Project/ViewGenerator/image/20190406004.png)
 ```
 配置更新界面如下
 ```
-![image text](https://docs.wang64.cn/Project/ViewGenerator/image/20190406005.png)
+![image text](https://docs.dolyw.com/Project/ViewGenerator/image/20190406005.png)
 
 #### 搭建参考
 
