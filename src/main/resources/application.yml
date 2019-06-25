@@ -17,7 +17,8 @@ spring:
             minIdle: 1
             timeBetweenEvictionRunsMillis: 60000
             minEvictableIdleTimeMillis: 300000
-            validationQuery: select 'x'
+            # validationQuery: select 'x'
+            validation-query: SELECT 1 from dual
             testWhileIdle: true
             testOnBorrow: false
             testOnReturn: false

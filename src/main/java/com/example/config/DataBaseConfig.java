@@ -42,14 +42,13 @@ public class DataBaseConfig {
     @Bean
     @Primary
     public GeneratorDao getGeneratorDao() {
-        String str = DataBaseEnum.MYSQL.getValue();
-        if(driver.indexOf(DataBaseEnum.MYSQL.getValue()) > 0) {
+        if(driver.indexOf(DataBaseEnum.MYSQL.getValue()) >= 0) {
             return mySqlGeneratorDao;
-        } else if (driver.indexOf(DataBaseEnum.ORACLE.getValue()) > 0) {
+        } else if (driver.indexOf(DataBaseEnum.ORACLE.getValue()) >= 0) {
             return oracleGeneratorDao;
-        } else if (driver.indexOf(DataBaseEnum.POSTGRESQL.getValue()) > 0) {
+        } else if (driver.indexOf(DataBaseEnum.POSTGRESQL.getValue()) >= 0) {
             return postgreSqlGeneratorDao;
-        } else if (driver.indexOf(DataBaseEnum.SQLSERVER.getValue()) > 0) {
+        } else if (driver.indexOf(DataBaseEnum.SQLSERVER.getValue()) >= 0) {
             return sqlServerGeneratorDao;
         }
         return null;
