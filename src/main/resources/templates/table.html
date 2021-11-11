@@ -343,7 +343,7 @@
                                 axios.get('/database/open').then(res => {
                                     this.tableLoading = false;
                                 }).catch(err => {
-                                    this.$message.error('出现异常');
+                                    this.$message.error(err.response.data.msg);
                                     this.tableLoading = false;
                                 });
                             }).catch(() => {
@@ -355,8 +355,8 @@
                     // 加载关闭
                     this.genLoading = false;
                 }).catch(err => {
-                    console.log(err);
-                    this.$message.error('出现异常');
+                    console.log(err.response);
+                    this.$message.error(err.response.data.msg);
                     // 加载关闭
                     this.genLoading = false;
                 });

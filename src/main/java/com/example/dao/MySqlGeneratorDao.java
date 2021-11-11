@@ -4,7 +4,8 @@ import org.springframework.stereotype.Repository;
 
 /**
  * MySQL
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/5 17:53
  */
 @Repository

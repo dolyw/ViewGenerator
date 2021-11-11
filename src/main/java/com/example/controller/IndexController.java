@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 通用访问匹配页面跳转
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/1/24 19:27
  */
 @Controller
@@ -14,8 +15,9 @@ public class IndexController {
 
     /**
      * 主页
+     *
      * @return java.lang.String
-     * @author dolyw.com
+     * @author wliduo[i@dolyw.com]
      * @date 2019/4/6 13:17
      */
     @RequestMapping("/")
@@ -25,9 +27,10 @@ public class IndexController {
 
     /**
      * 通用页面跳转
+     *
      * @param url
      * @return java.lang.String
-     * @author dolyw.com
+     * @author wliduo[i@dolyw.com]
      * @date 2019/1/24 19:27
      */
     @RequestMapping("{url}.shtml")
@@ -37,10 +40,11 @@ public class IndexController {
 
     /**
      * 通用页面跳转(二级目录)
+     *
      * @param module
-	 * @param url
+     * @param url
      * @return java.lang.String
-     * @author dolyw.com
+     * @author wliduo[i@dolyw.com]
      * @date 2019/1/24 19:27
      */
     @RequestMapping("{module}/{url}.shtml")
@@ -50,10 +54,11 @@ public class IndexController {
 
     /**
      * 通用页面跳转(三级目录)
+     *
      * @param module
-	 * @param url
+     * @param url
      * @return java.lang.String
-     * @author dolyw.com
+     * @author wliduo[i@dolyw.com]
      * @date 2019/1/25 19:35
      */
     @RequestMapping("{module}/{module2}/{url}.shtml")

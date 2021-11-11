@@ -86,10 +86,10 @@
             <artifactId>sqljdbc4</artifactId>
             <version>4.0</version>
         </dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- Mybatis -->
         <dependency>

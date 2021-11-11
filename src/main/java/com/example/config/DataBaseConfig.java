@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Primary;
 
 /**
  * Dao配置注入
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/5 17:56
  */
 @Configuration
@@ -33,16 +34,17 @@ public class DataBaseConfig {
 
     /**
      * 根据驱动判断注入那个类型数据库
+     *
      * @param
-     * @throws
      * @return com.example.dao.GeneratorDao
-     * @author dolyw.com
+     * @throws
+     * @author wliduo[i@dolyw.com]
      * @date 2019/4/5 17:59
      */
     @Bean
     @Primary
     public GeneratorDao getGeneratorDao() {
-        if(driver.indexOf(DataBaseEnum.MYSQL.getValue()) >= 0) {
+        if (driver.indexOf(DataBaseEnum.MYSQL.getValue()) >= 0) {
             return mySqlGeneratorDao;
         } else if (driver.indexOf(DataBaseEnum.ORACLE.getValue()) >= 0) {
             return oracleGeneratorDao;

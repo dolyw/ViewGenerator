@@ -36,6 +36,7 @@ import java.util.*;
 
 /**
  * DataBaseController
+ *
  * @author Generator
  * @date 2019-04-05 18:00:26
  */
@@ -67,7 +68,8 @@ public class DataBaseController {
 
     /**
      * 列表
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @GetMapping
@@ -94,7 +96,8 @@ public class DataBaseController {
 
     /**
      * 获取所有表名
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-08 16:00:26
      */
     @GetMapping("/tableNames/all")
@@ -114,7 +117,8 @@ public class DataBaseController {
 
     /**
      * 表详细字段信息
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/{tableName}")
@@ -128,11 +132,15 @@ public class DataBaseController {
 
     /**
      * 生成代码到输出路径
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @PostMapping("/{tableName}")
     public ResponseBean genTable(@PathVariable("tableName") String tableName) throws IOException {
+        if (!System.getProperties().getProperty(Constant.OS_NAME).contains(Constant.WINDOWS)) {
+            throw new SystemException("操作失败，非" + Constant.WINDOWS + "系统操作环境");
+        }
         // 配置表名
         String[] tableNames = tableName.split("-");
         if (outRoot == null) {
@@ -163,20 +171,21 @@ public class DataBaseController {
 
     /**
      * 生成代码为Zip文件下载
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/zip/{tableName}")
     public void genTableToZip(@PathVariable("tableName") String tableName,
-                                      HttpServletRequest request,
-                                      HttpServletResponse response) throws IOException {
+                              HttpServletRequest request,
+                              HttpServletResponse response) throws IOException {
         // 配置表名
         String[] tableNames = tableName.split("-");
         // 获得临时路径
         String loadPath = request.getSession().getServletContext().getRealPath("/");
         // 创建临时路径
         File tempDir = new File(loadPath + "/code");
-        if(!tempDir.exists()){
+        if (!tempDir.exists()) {
             tempDir.mkdirs();
         }
         // 生成代码到临时路径
@@ -203,11 +212,15 @@ public class DataBaseController {
 
     /**
      * 打开Windows系统的代码输出文件夹
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @GetMapping("/open")
     public ResponseBean open() {
+        if (!System.getProperties().getProperty(Constant.OS_NAME).contains(Constant.WINDOWS)) {
+            throw new SystemException("操作失败，非" + Constant.WINDOWS + "系统操作环境");
+        }
         try {
             // 有:应该是全路径
             String[] array = outRoot.split(":");
@@ -225,7 +238,8 @@ public class DataBaseController {
 
     /**
      * 读取更新配置文件generator.properties
-     * @author dolyw.com
+     *
+     * @author wliduo[i@dolyw.com]
      * @date 2019-04-05 18:00:26
      */
     @PutMapping("/config")
@@ -266,8 +280,7 @@ public class DataBaseController {
                         // 更新，服务器热重启
                         safeProperties.store(output, null);
                     }
-                }
-                finally {
+                } finally {
                     if (input != null) {
                         input.close();
                     }
@@ -284,17 +297,18 @@ public class DataBaseController {
 
     /**
      * 通过表名生成代码
+     *
      * @param tableNames 表名数组
-	 * @param outRoot 代码输出文件夹
-     * @throws IOException
+     * @param outRoot    代码输出文件夹
      * @return boolean
-     * @author dolyw.com
+     * @throws IOException
+     * @author wliduo[i@dolyw.com]
      * @date 2019/4/8 17:19
      */
     public boolean genCode(String[] tableNames, String outRoot) throws IOException {
         GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRoot);
         // 配置信息
-        GeneratorProperties.load(new String[]{ "classpath:config/generator.properties" });
+        GeneratorProperties.load(new String[]{"classpath:config/generator.properties"});
         // 模板位置
         Generator generator = generatorFacade.getGenerator();
         generator.addTemplateRootDir(Constant.PROJECT_PATH + template);

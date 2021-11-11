@@ -2,7 +2,8 @@ package com.example.constant;
 
 /**
  * 数据库类型
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/6 19:53
  */
 public enum DataBaseEnum {

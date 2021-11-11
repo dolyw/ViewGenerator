@@ -30,6 +30,22 @@
                         <div id="app">
                             <!-- 表单 -->
                             <el-form v-loading="submitLoading" ref="generator" :model="generator" :rules="generatorRules" size="small" label-width="200px">
+                                <el-form-item label="jdbc_driver" prop="jdbc_driver">
+                                    <el-input v-model.trim="generator.jdbc_driver" placeholder="请输入jdbc_driver"/>
+                                </el-form-item>
+
+                                <el-form-item label="jdbc_url" prop="jdbc_url">
+                                    <el-input v-model.trim="generator.jdbc_url" placeholder="请输入jdbc_url"/>
+                                </el-form-item>
+
+                                <el-form-item label="jdbc_username" prop="jdbc_username">
+                                    <el-input v-model.trim="generator.jdbc_username" placeholder="请输入jdbc_username"/>
+                                </el-form-item>
+
+                                <el-form-item label="jdbc_password" prop="jdbc_password">
+                                    <el-input v-model.trim="generator.jdbc_password" placeholder="请输入jdbc_password"/>
+                                </el-form-item>
+
                                 <el-form-item label="outRoot" prop="outRoot">
                                     <el-input v-model.trim="generator.outRoot" placeholder="请输入outRoot"/>
                                 </el-form-item>
@@ -40,6 +56,10 @@
 
                                 <el-form-item label="tableRemovePrefixes">
                                     <el-input v-model.trim="generator.tableRemovePrefixes" placeholder="请输入tableRemovePrefixes"/>
+                                </el-form-item>
+
+                                <el-form-item label="rowRemovePrefixes">
+                                    <el-input v-model.trim="generator.rowRemovePrefixes" placeholder="请输入rowRemovePrefixes"/>
                                 </el-form-item>
 
                                 <el-form-item label="author" prop="author">
@@ -76,6 +96,12 @@
                         <h5 class="header-title m-t-0 m-b-30">说明</h5>
                         <div id="ex">
                             <el-collapse v-model="activeNames" accordion>
+                                <el-collapse-item name="0">
+                                    <template slot="title">
+                                        <b class="title">jdbc</b>
+                                    </template>
+                                    <div>数据库配置</div>
+                                </el-collapse-item>
                                 <el-collapse-item name="1">
                                     <template slot="title">
                                         <b class="title">outRoot</b>
@@ -96,35 +122,41 @@
                                 </el-collapse-item>
                                 <el-collapse-item title="template" name="4">
                                     <template slot="title">
-                                        <b class="title">author</b>
+                                        <b class="title">rowRemovePrefixes</b>
                                     </template>
-                                    <div>模板代码的author属性(注释的作者名称)，示例: dolyw.com</div>
+                                    <div>生成代码需要移除的列名前缀，例如user_password字段变password属性则配置user_，使用逗号分隔同时配置多个前缀，示例: user_,item_(不能有空格)</div>
                                 </el-collapse-item>
                                 <el-collapse-item title="template" name="5">
+                                    <template slot="title">
+                                        <b class="title">author</b>
+                                    </template>
+                                    <div>模板代码的author属性(注释的作者名称)，示例: wliduo[i@dolyw.com]</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="6">
                                     <template slot="title">
                                         <b class="title">basepackage</b>
                                     </template>
                                     <div>模板代码的basepackage属性，示例: com.example</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="6">
+                                <el-collapse-item title="template" name="7">
                                     <template slot="title">
                                         <b class="title">commonspackage</b>
                                     </template>
                                     <div>模板代码的commonspackage属性，示例: com.example</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="7">
+                                <el-collapse-item title="template" name="8">
                                     <template slot="title">
                                         <b class="title">namespace</b>
                                     </template>
                                     <div>模板代码的namespace属性，示例: view</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="8">
+                                <el-collapse-item title="template" name="9">
                                     <template slot="title">
                                         <b class="title">modulepackage</b>
                                     </template>
                                     <div>模板代码的modulepackage属性，示例: generator</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="9">
+                                <el-collapse-item title="template" name="10">
                                     <template slot="title">
                                         <b class="title">更多配置</b>
                                     </template>
@@ -157,12 +189,22 @@
             generator: {
                 // 是读取还是写入
                 isRead: true,
+                // 数据库驱动
+                jdbc_driver: '',
+                // 数据库url
+                jdbc_url: '',
+                // 数据库username
+                jdbc_username: '',
+                // 数据库password
+                jdbc_password: '',
                 // 代码生成的文件输出路径
                 outRoot: '',
                 // 模板代码位置
                 template: '',
                 // 生成代码需要移除的表名前缀
                 tableRemovePrefixes: '',
+                // 生成代码需要移除的列名前缀
+                rowRemovePrefixes: '',
                 // 模板代码的author属性
                 author: '',
                 // 模板代码的basepackage属性
@@ -177,6 +219,18 @@
             },
             // 表单检验规则
             generatorRules: {
+                jdbc_driver: [
+                    { required: true, message: '请输入jdbc_driver', trigger: 'blur' }
+                ],
+                jdbc_url: [
+                    { required: true, message: '请输入jdbc_url', trigger: 'blur' }
+                ],
+                jdbc_username: [
+                    { required: true, message: '请输入jdbc_username', trigger: 'blur' }
+                ],
+                jdbc_password: [
+                    { required: true, message: '请输入jdbc_password', trigger: 'blur' }
+                ],
                 outRoot: [
                     { required: true, message: '请输入outRoot', trigger: 'blur' }
                 ],
@@ -255,9 +309,9 @@
                                 this.submitLoading = false;
                             }
                         }).catch(err => {
-                                console.log(err.response);
+                            console.log(err.response);
                             this.submitLoading = false;
-                            this.$message.error('出现异常');
+                            this.$message.error(err.response.data.msg);
                         });
                     } else {
                         this.submitLoading = false;

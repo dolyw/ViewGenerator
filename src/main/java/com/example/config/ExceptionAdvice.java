@@ -13,13 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 异常控制处理器
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2018/8/30 14:02
  */
 @RestControllerAdvice
 public class ExceptionAdvice {
     /**
      * 捕捉自定义异常
+     *
      * @return
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -30,6 +32,7 @@ public class ExceptionAdvice {
 
     /**
      * 捕捉系统异常
+     *
      * @return
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -40,6 +43,7 @@ public class ExceptionAdvice {
 
     /**
      * 捕捉404异常
+     *
      * @return
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -50,6 +54,7 @@ public class ExceptionAdvice {
 
     /**
      * 捕捉其他所有异常
+     *
      * @param request
      * @param ex
      * @return
@@ -62,6 +67,7 @@ public class ExceptionAdvice {
 
     /**
      * 获取状态码
+     *
      * @param request
      * @return
      */

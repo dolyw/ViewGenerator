@@ -4,16 +4,18 @@ import cn.org.rapid_framework.generator.GeneratorFacade;
 import cn.org.rapid_framework.generator.util.StringHelper;
 
 /**
- * CustomGeneratorFacade
- * @author dolyw.com
+ * 重写GeneratorFacade
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/6 19:36
  */
 public class CustomGeneratorFacade extends GeneratorFacade {
 
     /**
      * CustomGeneratorFacade
+     *
      * @param outRootDir
-     * @author dolyw.com
+     * @author wliduo[i@dolyw.com]
      * @date 2019/4/8 9:27
      */
     public CustomGeneratorFacade(String outRootDir) {

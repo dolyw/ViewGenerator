@@ -8,7 +8,8 @@ import com.generator.CustomGeneratorFacade;
 
 /**
  * Test类生成代码
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/04/08 09:21
  */
 public class GeneratorCode extends BaseTest {

@@ -11,7 +11,8 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * ZipUtil
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/6 12:00
  */
 public class ZipUtil {
@@ -23,6 +24,7 @@ public class ZipUtil {
 
     /**
      * 压缩成ZIP 方法1
+     *
      * @param srcDir           压缩文件夹路径
      * @param out              压缩文件输出流
      * @param comment          压缩文件注释
@@ -57,6 +59,7 @@ public class ZipUtil {
 
     /**
      * 压缩成ZIP 方法2
+     *
      * @param srcFiles 需要压缩的文件列表
      * @param out      压缩文件输出流
      * @throws RuntimeException 压缩失败会抛出运行时异常
@@ -94,6 +97,7 @@ public class ZipUtil {
 
     /**
      * 递归压缩方法
+     *
      * @param sourceFile       源文件
      * @param zos              zip输出流
      * @param name             压缩后的名称

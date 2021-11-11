@@ -2,7 +2,8 @@ package com.example.constant;
 
 /**
  * Constant
- * @author dolyw.com
+ *
+ * @author wliduo[i@dolyw.com]
  * @date 2019/4/6 19:50
  */
 public interface Constant {
@@ -21,5 +22,15 @@ public interface Constant {
      * 模板
      */
     String TEMPLATE = "template";
+
+    /**
+     * OS_NAME
+     */
+    String OS_NAME = "os.name";
+
+    /**
+     * Windows
+     */
+    String WINDOWS = "Windows";
 
 }
