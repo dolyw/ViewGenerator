@@ -51,10 +51,10 @@
                             <!-- 数据表格 -->
                             <el-table v-loading="tableLoading" :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
                                 <el-table-column type="selection" align="center" width="55"></el-table-column>
-                                <el-table-column type="index" align="center" min-width="60"/>
-                                <el-table-column prop="tableName" label="表名" align="center" min-width="100" show-overflow-tooltip />
-                                <el-table-column prop="tableComment" label="表注释" align="center" min-width="100" show-overflow-tooltip />
-                                <el-table-column prop="engine" label="表类型" align="center" min-width="80" show-overflow-tooltip />
+                                <el-table-column type="index" align="center" min-width="60"></el-table-column>
+                                <el-table-column prop="tableName" label="表名" align="center" min-width="100" show-overflow-tooltip></el-table-column>
+                                <el-table-column prop="tableComment" label="表注释" align="center" min-width="100" show-overflow-tooltip></el-table-column>
+                                <el-table-column prop="ENGINE" label="表类型" align="center" min-width="80" show-overflow-tooltip></el-table-column>
                                 <el-table-column prop="createTime" label="创建时间" align="center" min-width="100" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         {{ moment(scope.row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
@@ -80,12 +80,12 @@
                             <!-- 表详细弹出框 -->
                             <el-dialog :title="title" :visible.sync="dialogVisible">
                                 <el-table :data="tableDetailData" height="380" border style="width: 100%">
-                                    <el-table-column type="index" align="center" min-width="60"/>
-                                    <el-table-column prop="columnName" label="字段名" align="center" min-width="100" show-overflow-tooltip />
-                                    <el-table-column prop="columnComment" label="字段注释" align="center" min-width="150" show-overflow-tooltip />
-                                    <el-table-column prop="dataType" label="字段类型" align="center" min-width="70" show-overflow-tooltip />
-                                    <el-table-column prop="columnKey" label="字段属性" align="center" min-width="60" show-overflow-tooltip />
-                                    <el-table-column prop="extra" label="其他属性" align="center" min-width="100" show-overflow-tooltip />
+                                    <el-table-column type="index" align="center" min-width="60"></el-table-column>
+                                    <el-table-column prop="columnName" label="字段名" align="center" min-width="100" show-overflow-tooltip></el-table-column>
+                                    <el-table-column prop="columnComment" label="字段注释" align="center" min-width="150" show-overflow-tooltip></el-table-column>
+                                    <el-table-column prop="dataType" label="字段类型" align="center" min-width="70" show-overflow-tooltip></el-table-column>
+                                    <el-table-column prop="columnKey" label="字段属性" align="center" min-width="60" show-overflow-tooltip></el-table-column>
+                                    <el-table-column prop="extra" label="其他属性" align="center" min-width="100" show-overflow-tooltip></el-table-column>
                                 </el-table>
                             </el-dialog>
 

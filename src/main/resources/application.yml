@@ -30,7 +30,7 @@ spring:
         # 开发时关闭缓存不然没法看到实时页面
         cache: false
         # 启用不严格检查
-        mode: LEGACYHTML5
+        mode: HTML
 
 mybatis:
     # Mybatis配置Mapper路径

@@ -2,7 +2,8 @@ package com.example.test;
 
 import com.example.base.BaseTest;
 import com.example.util.SafeProperties;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
