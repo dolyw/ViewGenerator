@@ -32,7 +32,7 @@ public class GeneratorCode extends BaseTest {
     /**
      * 代码模板位置
      */
-    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/main/resources/template/two/RESTful";
+    private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/template/RESTful";
 
     /**
      * 有三点需要引起特别的注意
