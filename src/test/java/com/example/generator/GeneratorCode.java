@@ -53,7 +53,7 @@ public class GeneratorCode extends BaseTest {
         // GeneratorFacade
         GeneratorFacade generatorFacade = new CustomGeneratorFacade(OUT_ROOT);
         // 配置信息
-        GeneratorProperties.load(new String[]{ CONFIG_PATH });
+        GeneratorProperties.load(CONFIG_PATH);
         // 模板位置
         Generator generator = generatorFacade.getGenerator();
         generator.addTemplateRootDir(TEMPLATE_FILE_PATH);

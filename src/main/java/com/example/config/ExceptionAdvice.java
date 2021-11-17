@@ -27,6 +27,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomException.class)
     public ResponseBean handle(CustomException e) {
+        e.printStackTrace();
         return new ResponseBean(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
     }
 
@@ -38,6 +39,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SystemException.class)
     public ResponseBean handle(SystemException e) {
+        e.printStackTrace();
         return new ResponseBean(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage(), null);
     }
 
@@ -49,6 +51,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseBean handle(NoHandlerFoundException e) {
+        e.printStackTrace();
         return new ResponseBean(HttpStatus.NOT_FOUND.value(), e.getMessage(), null);
     }
 
@@ -62,6 +65,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ResponseBean globalException(HttpServletRequest request, Throwable ex) {
+        ex.printStackTrace();
         return new ResponseBean(this.getStatus(request).value(), ex.toString() + ": " + ex.getMessage(), null);
     }
 

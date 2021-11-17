@@ -1,5 +1,7 @@
 package com.example.constant;
 
+import java.io.File;
+
 /**
  * Constant
  *
@@ -32,5 +34,20 @@ public interface Constant {
      * Windows
      */
     String WINDOWS = "Windows";
+
+    /**
+     * TMEP_DIR
+     */
+    String TMEP_DIR = PROJECT_PATH + File.separator + "temp" + File.separator;
+
+    /**
+     * CONFIG_PATH
+     */
+    String CONFIG_PATH = "config" + File.separator + "generator.properties";
+
+    /**
+     * CONFIG_PATH_TEMP
+     */
+    String CONFIG_PATH_TEMP = TMEP_DIR + File.separator + CONFIG_PATH;
 
 }

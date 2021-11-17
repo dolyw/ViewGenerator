@@ -5,9 +5,12 @@
  */
 package com.example.controller;
 
+import cn.hutool.core.io.FileUtil;
 import cn.org.rapid_framework.generator.Generator;
 import cn.org.rapid_framework.generator.GeneratorFacade;
 import cn.org.rapid_framework.generator.GeneratorProperties;
+import com.alibaba.fastjson.JSON;
+import com.example.Application;
 import com.example.constant.Constant;
 import com.example.dao.GeneratorDao;
 import com.example.exception.SystemException;
@@ -17,6 +20,8 @@ import com.generator.CustomGeneratorFacade;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +35,6 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 
 /**
@@ -43,6 +46,11 @@ import java.util.*;
 @RestController
 @RequestMapping("database")
 public class DataBaseController {
+
+    /**
+     * logger
+     */
+    private static final Logger logger = LoggerFactory.getLogger(DataBaseController.class);
 
     /**
      * 代码生成的文件输出路径
@@ -182,9 +190,11 @@ public class DataBaseController {
         // 配置表名
         String[] tableNames = tableName.split("-");
         // 获得临时路径
-        String loadPath = request.getSession().getServletContext().getRealPath("/");
+        String loadPath = request.getSession().getServletContext().getRealPath(File.separator);
+        logger.info("临时路径: {}", loadPath);
         // 创建临时路径
-        File tempDir = new File(loadPath + "/code");
+        File tempDir = new File(loadPath + File.separator + "code");
+        logger.info("完整临时路径: {}", loadPath + File.separator + "code");
         if (!tempDir.exists()) {
             tempDir.mkdirs();
         }
@@ -231,6 +241,7 @@ public class DataBaseController {
                 Runtime.getRuntime().exec("cmd.exe /c start " + System.getProperty("user.dir") + outRoot);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new SystemException("操作失败");
         }
         return new ResponseBean(HttpStatus.OK.value(), "操作成功", null);
@@ -245,51 +256,49 @@ public class DataBaseController {
     @PutMapping("/config")
     public ResponseBean config(@RequestBody Map<String, String> config) {
         try {
-            final Enumeration urls = DataBaseController.class.getClassLoader().getResources("config/generator.properties");
-            while (urls.hasMoreElements()) {
-                final URL url = (URL) urls.nextElement();
-                InputStream input = null;
-                OutputStream output = null;
-                try {
-                    final URLConnection con = url.openConnection();
-                    con.setUseCaches(false);
-                    input = con.getInputStream();
-                    SafeProperties safeProperties = new SafeProperties();
-                    if (Boolean.parseBoolean(config.get("isRead"))) {
-                        // 读
-                        safeProperties.load(input);
-                        config = (Map) safeProperties;
-                    } else {
-                        // 写
-                        safeProperties.load(input);
-                        // 遍历map写入
-                        Iterator<Map.Entry<String, String>> entries = config.entrySet().iterator();
-                        while (entries.hasNext()) {
-                            Map.Entry<String, String> entry = entries.next();
-                            if (Constant.TEMPLATE.equals(entry.getKey())) {
-                                // 查看配置路径下macro.includ文件是否存在
-                                File file = new File(Constant.PROJECT_PATH + entry.getValue() + "/macro.include");
-                                if (!file.exists()) {
-                                    // 模板代码位置不存在
-                                    return new ResponseBean(HttpStatus.BAD_REQUEST.value(), "当前填写的模板代码位置不存在", null);
-                                }
+            InputStream input = null;
+            OutputStream output = null;
+            try {
+                input = FileUtil.getInputStream(Constant.CONFIG_PATH_TEMP);
+                SafeProperties safeProperties = new SafeProperties();
+                if (Boolean.parseBoolean(config.get("isRead"))) {
+                    // 读
+                    safeProperties.load(input);
+                    config = (Map) safeProperties;
+                    logger.info("读取配置: {}", JSON.toJSONString(config));
+                } else {
+                    // 写
+                    safeProperties.load(input);
+                    // 遍历map写入
+                    Iterator<Map.Entry<String, String>> entries = config.entrySet().iterator();
+                    while (entries.hasNext()) {
+                        Map.Entry<String, String> entry = entries.next();
+                        if (Constant.TEMPLATE.equals(entry.getKey())) {
+                            // 查看配置路径下macro.includ文件是否存在
+                            File file = new File(Constant.PROJECT_PATH + entry.getValue() + "/macro.include");
+                            if (!file.exists()) {
+                                // 模板代码位置不存在
+                                return new ResponseBean(HttpStatus.BAD_REQUEST.value(), "当前填写的模板代码位置不存在", null);
                             }
-                            safeProperties.setProperty(entry.getKey(), entry.getValue());
                         }
-                        output = new FileOutputStream(url.getPath());
-                        // 更新，服务器热重启
-                        safeProperties.store(output, null);
+                        safeProperties.setProperty(entry.getKey(), entry.getValue());
                     }
-                } finally {
-                    if (input != null) {
-                        input.close();
-                    }
-                    if (output != null) {
-                        output.close();
-                    }
+                    logger.info("更新配置: {}, url: {}", JSON.toJSONString(safeProperties), Constant.CONFIG_PATH_TEMP);
+                    output = new FileOutputStream(Constant.CONFIG_PATH_TEMP);
+                    // 更新，服务器热重启
+                    safeProperties.store(output, null);
+                    Application.restart();
+                }
+            } finally {
+                if (input != null) {
+                    input.close();
+                }
+                if (output != null) {
+                    output.close();
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new SystemException("操作失败");
         }
         return new ResponseBean(HttpStatus.OK.value(), "操作成功", config);
@@ -308,10 +317,11 @@ public class DataBaseController {
     public boolean genCode(String[] tableNames, String outRoot) throws IOException {
         GeneratorFacade generatorFacade = new CustomGeneratorFacade(outRoot);
         // 配置信息
-        GeneratorProperties.load(new String[]{"classpath:config/generator.properties"});
+        GeneratorProperties.load(Constant.CONFIG_PATH_TEMP);
         // 模板位置
         Generator generator = generatorFacade.getGenerator();
-        generator.addTemplateRootDir(Constant.PROJECT_PATH + template);
+        logger.info(Constant.PROJECT_PATH + File.separator + template);
+        generator.addTemplateRootDir(Constant.PROJECT_PATH + File.separator + template);
         // 开始执行
         try {
             for (String tableName : tableNames) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="/common/common :: head('配置更新')"></head>
+<head th:include="common/common :: head('配置更新')"></head>
 <style>
     .el-input {
         position: relative;
@@ -13,11 +13,11 @@
 
 <body>
 
-<header th:include="/common/common :: header('配置更新')"></header>
+<header th:include="common/common :: header('配置更新')"></header>
 
 <div class="admin">
 
-    <div th:include="/common/common :: sidebar"></div>
+    <div th:include="common/common :: sidebar"></div>
 
     <div class="content-page">
         <div class="content">
@@ -30,6 +30,11 @@
                         <div id="app">
                             <!-- 表单 -->
                             <el-form v-loading="submitLoading" ref="generator" :model="generator" :rules="generatorRules" size="small" label-width="200px">
+                                <el-form-item>
+                                    <el-button type="primary" icon="el-icon-refresh" @click="list">刷新</el-button>
+                                    <el-button type="danger" icon="el-icon-setting" @click="setGen">设置</el-button>
+                                </el-form-item>
+
                                 <el-form-item label="jdbc_driver" prop="jdbc_driver">
                                     <el-input v-model.trim="generator.jdbc_driver" placeholder="请输入jdbc_driver"/>
                                 </el-form-item>
@@ -80,11 +85,6 @@
 
                                 <el-form-item label="modulepackage" prop="modulepackage">
                                     <el-input v-model.trim="generator.modulepackage" placeholder="请输入modulepackage"/>
-                                </el-form-item>
-
-                                <el-form-item>
-                                    <el-button type="primary" icon="el-icon-refresh" @click="list">刷新</el-button>
-                                    <el-button type="danger" icon="el-icon-setting" @click="setGen">设置</el-button>
                                 </el-form-item>
                             </el-form>
                         </div>
@@ -174,7 +174,7 @@
     </div>
 </div>
 
-<div th:include="/common/common :: commonJS" th:remove="tag"></div>
+<div th:include="common/common :: commonJS" th:remove="tag"></div>
 
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
