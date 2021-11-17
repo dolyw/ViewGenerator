@@ -9,11 +9,11 @@
 
 #### 项目相关
 
-版本 | 操作 | 链接
-----|------|----
-SpringBoot1.5(第一版) | Test类生成代码  | [https://github.com/dolyw/ViewGenerator/releases](https://github.com/dolyw/ViewGenerator/releases)
-SpringBoot2.1(第二版) | Test类生成代码  | [https://github.com/dolyw/ViewGenerator/releases](https://github.com/dolyw/ViewGenerator/releases)
-SpringBoot1.5(第三版) | 可视化界面或Test类两种  | 当前
+版本 | 描述
+----|------
+SpringBoot1.5 | Test类生成代码
+SpringBoot2.1 | 可视化界面及Test类两种
+SpringBoot2.5 | 可视化界面及Test类，在线切换数据库
 
 #### 项目介绍
 
@@ -21,7 +21,7 @@ ViewGenerator是一个基于SpringBoot & FreeMarker的自定义模板代码生�
 
 1. 可视化界面，上手操作简单
 2. 高度灵活的代码模板配置(提供两套模板参考)，可以自行添加N套代码模板
-3. 支持多数据库，支持在线生成代码且可提供ZIP文件下载
+3. 支持多数据库，在线切换数据库，支持在线生成代码且可提供ZIP文件下载
 
 #### 软件架构
 
@@ -29,9 +29,11 @@ SpringBoot + Mybatis + PageHelper + 通用Mapper + Thymeleaf(Amaze UI(布局) + 
 
 #### 安装教程
 
-1. 配置resource下config/generator.properties数据库信息，Test类在src\test\java\com\example\generator\GeneratorCode
-2. 模板提供两套示例LayUI和RESTful，自行添加模板路径src\test\resources\template\two
-3. 可视化界面操作运行项目src\main\java\com\example\Application.java即可，访问[http://localhost:8080](http://localhost:8080)，可以在线设置生成代码的配置
+1. 配置resource下config/generator.properties数据库信息启动Application即可，也可以本地直接执行Test类在src\test\java\com\example\generator\GeneratorCode
+2. 模板提供两套示例LayUI和RESTful，自行添加模板路径\template\
+3. 可视化界面操作访问[http://localhost:8080](http://localhost:8080)，可以在线设置生成代码的配置
+4. 服务器部署，下载代码到本地打包成jar包上传到服务器启动即可
+5. 服务器部署后需要自行复制template文件夹到与jar包同级目录下
 
 #### 使用说明
 
