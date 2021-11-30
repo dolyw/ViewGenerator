@@ -1,0 +1,41 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameLower = className?uncap_first>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="${basepackage}.dao.${className}Dao">
+
+	<resultMap id="${classNameLower}ResultMap" type="${basepackage}.dto.custom.${className}Dto">
+		<#list table.pkColumns as column>
+        <id property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcType}"></id>
+		</#list>  
+        <#list table.notPkColumns as column>
+        <result property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcType}"></result>
+		</#list>       
+	</resultMap>
+
+	<sql id="${classNameLower}AliasColumns">
+		<#list table.columns as column>
+		g.${column.sqlName} AS ${column.columnNameLower}<#if column_has_next>,</#if>
+		</#list>
+	</sql>
+
+	<select id="findPageInfo" resultType="${basepackage}.dto.custom.${className}Dto">
+		SELECT
+			<#list table.columns as column>
+			g.${column.sqlName} AS ${column.columnNameLower}<#if column_has_next>,</#if>
+			</#list>
+		FROM
+			${table.sqlName} g
+		<where>
+			1 = 1
+			<#list table.columns as column>
+			<if test="${column.columnNameLower} != null and ${column.columnNameLower} != ''">
+			AND	g.${column.sqlName} = #${r'{'}${column.columnNameLower}${r'}'}
+			</if>
+			</#list>
+		</where>
+	</select>
+
+</mapper>

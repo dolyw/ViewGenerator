@@ -1,0 +1,26 @@
+<#include "/macro.include"/>
+<#assign className = table.className>   
+<#assign classNameLower = className?uncap_first>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="${basepackage}.mapper.${className}Mapper">
+    <resultMap id="${classNameLower}RstMap" type="${basepackage}.entity.${className}Entity">
+        <#list table.columns as column>
+        <#if column.pk>
+        <id column="${column.sqlName}" property="${column.columnNameLower}"/>
+        <#else>
+        <result column="${column.sqlName}" property="${column.columnNameLower}"/>
+        </#if>
+        </#list>
+    </resultMap>
+
+    <sql id="${classNameLower}SelectAllColumns">
+        <#list table.columns as column>
+        t.${column.sqlName}<#if column_has_next>,</#if>
+        </#list>
+    </sql>
+
+
+
+</mapper>
