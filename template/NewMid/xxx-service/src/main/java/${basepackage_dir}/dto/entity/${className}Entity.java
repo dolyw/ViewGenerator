@@ -39,7 +39,7 @@ public class ${className}Entity extends BaseEntity {
     <#else>
     </#if>
     <#else>
-    <#if (column.columnNameLower != 'createdBy')&&(column.columnNameLower != 'updatedBy')&&(column.columnNameLower != 'invalidFlag') >
+    <#if (column.columnNameLower != 'createdBy')&&(column.columnNameLower != 'updatedBy')&&(column.columnNameLower != 'invalidFlag')&&(column.columnNameLower != 'deletedInd') >
 
     /** ${column.columnAlias!} */
     <#if column.pk>

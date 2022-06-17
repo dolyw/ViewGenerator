@@ -3,7 +3,6 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.web;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -54,9 +53,8 @@ public class ${className}Controller {
     @Operation(summary = "${table.tableAlias}-列表", description = "列表查询")
     @GetMapping("/list")
     public ResponseMessage<IPage<${className}Dto>> list(PageQuery pageQuery, ${className}Dto ${classNameLower}Dto) {
-        Page<${className}Dto> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        QueryWrapper<${className}Dto> ${classNameLower}DtoQueryWrapper = Wrappers.query(${classNameLower}Dto);
-        return ResponseMessage.success(${classNameLower}Service.page(page, ${classNameLower}DtoQueryWrapper));
+        Page<${className}Dto> page = Page.of(pageQuery.getPageNum(), pageQuery.getPageSize());
+        return ResponseMessage.success(${classNameLower}Service.page(page, Wrappers.lambdaQuery(${classNameLower}Dto)));
     }
 
     /**
@@ -78,7 +76,7 @@ public class ${className}Controller {
      * @author ${author}
      * @date ${now?string('yyyy-MM-dd HH:mm:ss')}
      */
-@Operation(summary = "${table.tableAlias}-新增", description = "数据新增")
+    @Operation(summary = "${table.tableAlias}-新增", description = "数据新增")
     @PostMapping("/add")
     public ResponseMessage add(@RequestBody ${className}Dto ${classNameLower}Dto) {
         return ResponseMessage.success(${classNameLower}Service.save(${classNameLower}Dto));
