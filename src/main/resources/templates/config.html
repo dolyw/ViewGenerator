@@ -24,7 +24,7 @@
 
             <div class="am-g">
                 <!-- Row start -->
-                <div class="am-u-md-6">
+                <div class="am-u-md-7">
                     <div class="card-box">
                         <h5 class="header-title m-t-0 m-b-30">配置</h5>
                         <div id="app">
@@ -40,7 +40,7 @@
                                 </el-form-item>
 
                                 <el-form-item label="jdbc_url" prop="jdbc_url">
-                                    <el-input v-model.trim="generator.jdbc_url" placeholder="请输入jdbc_url"/>
+                                    <el-input type="textarea" :rows="3" v-model.trim="generator.jdbc_url" placeholder="请输入jdbc_url"/>
                                 </el-form-item>
 
                                 <el-form-item label="jdbc_username" prop="jdbc_username">
@@ -49,10 +49,6 @@
 
                                 <el-form-item label="jdbc_password" prop="jdbc_password">
                                     <el-input v-model.trim="generator.jdbc_password" placeholder="请输入jdbc_password"/>
-                                </el-form-item>
-
-                                <el-form-item label="outRoot" prop="outRoot">
-                                    <el-input v-model.trim="generator.outRoot" placeholder="请输入outRoot"/>
                                 </el-form-item>
 
                                 <el-form-item label="template" prop="template">
@@ -65,10 +61,6 @@
 
                                 <el-form-item label="rowRemovePrefixes">
                                     <el-input v-model.trim="generator.rowRemovePrefixes" placeholder="请输入rowRemovePrefixes"/>
-                                </el-form-item>
-
-                                <el-form-item label="author" prop="author">
-                                    <el-input v-model.trim="generator.author" placeholder="请输入author"/>
                                 </el-form-item>
 
                                 <el-form-item label="basepackage" prop="basepackage">
@@ -86,12 +78,20 @@
                                 <el-form-item label="modulepackage" prop="modulepackage">
                                     <el-input v-model.trim="generator.modulepackage" placeholder="请输入modulepackage"/>
                                 </el-form-item>
+
+                                <el-form-item label="author" prop="author">
+                                    <el-input v-model.trim="generator.author" placeholder="请输入author"/>
+                                </el-form-item>
+
+                                <el-form-item label="outRoot" prop="outRoot">
+                                    <el-input v-model.trim="generator.outRoot" placeholder="请输入outRoot"/>
+                                </el-form-item>
                             </el-form>
                         </div>
                     </div>
                 </div>
 
-                <div class="am-u-md-6">
+                <div class="am-u-md-5">
                     <div class="card-box">
                         <h5 class="header-title m-t-0 m-b-30">说明</h5>
                         <div id="ex">
@@ -102,19 +102,13 @@
                                     </template>
                                     <div>数据库配置</div>
                                 </el-collapse-item>
-                                <el-collapse-item name="1">
-                                    <template slot="title">
-                                        <b class="title">outRoot</b>
-                                    </template>
-                                    <div>代码生成的文件输出路径(路径为部署应用系统下)，示例: 绝对路径(E:/work/outRoot) 相对路径(/src/main)</div>
-                                </el-collapse-item>
-                                <el-collapse-item title="template" name="2">
+                                <el-collapse-item title="template" name="3">
                                     <template slot="title">
                                         <b class="title">template</b>
                                     </template>
                                     <div>模板代码位置，示例: 相对路径(/src/main/resources/template/two/RESTful)</div>
                                 </el-collapse-item>
-                                <el-collapse-item title="template" name="3">
+                                <el-collapse-item title="template" name="1">
                                     <template slot="title">
                                         <b class="title">tableRemovePrefixes</b>
                                     </template>
@@ -125,12 +119,6 @@
                                         <b class="title">rowRemovePrefixes</b>
                                     </template>
                                     <div>生成代码需要移除的列名前缀，例如user_password字段变password属性则配置user_，使用逗号分隔同时配置多个前缀，示例: user_,item_(不能有空格)</div>
-                                </el-collapse-item>
-                                <el-collapse-item title="template" name="5">
-                                    <template slot="title">
-                                        <b class="title">author</b>
-                                    </template>
-                                    <div>模板代码的author属性(注释的作者名称)，示例: wliduo[i@dolyw.com]</div>
                                 </el-collapse-item>
                                 <el-collapse-item title="template" name="6">
                                     <template slot="title">
@@ -155,6 +143,18 @@
                                         <b class="title">modulepackage</b>
                                     </template>
                                     <div>模板代码的modulepackage属性，示例: generator</div>
+                                </el-collapse-item>
+                                <el-collapse-item title="template" name="5">
+                                    <template slot="title">
+                                        <b class="title">author</b>
+                                    </template>
+                                    <div>模板代码的author属性(注释的作者名称)，示例: wliduo[i@dolyw.com]</div>
+                                </el-collapse-item>
+                                <el-collapse-item name="2">
+                                    <template slot="title">
+                                        <b class="title">outRoot</b>
+                                    </template>
+                                    <div>代码生成的文件输出路径(路径为部署应用系统下)，示例: 绝对路径(E:/work/outRoot) 相对路径(/src/main)</div>
                                 </el-collapse-item>
                                 <el-collapse-item title="template" name="10">
                                     <template slot="title">
