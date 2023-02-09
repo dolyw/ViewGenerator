@@ -12,6 +12,7 @@ import cn.org.rapid_framework.generator.GeneratorProperties;
 import com.alibaba.fastjson.JSON;
 import com.example.Application;
 import com.example.constant.Constant;
+import com.example.constant.DataBaseEnum;
 import com.example.dao.GeneratorDao;
 import com.example.exception.SystemException;
 import com.example.util.SafeProperties;
@@ -35,6 +36,11 @@ import org.springframework.http.HttpStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -262,25 +268,27 @@ public class DataBaseController {
                 input = FileUtil.getInputStream(Constant.CONFIG_PATH_TEMP);
                 SafeProperties safeProperties = new SafeProperties();
                 if (Boolean.parseBoolean(config.get("isRead"))) {
-                    // 读
+                    // 读取
                     safeProperties.load(input);
                     config = (Map) safeProperties;
                     logger.info("读取配置: {}", JSON.toJSONString(config));
                 } else {
-                    // 写
+                    // 写前验证
+                    File file = new File(Constant.PROJECT_PATH + config.get(Constant.TEMPLATE) + "/macro.include");
+                    // 查看配置路径下macro.includ文件是否存在
+                    if (!file.exists()) {
+                        // 模板代码位置不存在
+                        return new ResponseBean(HttpStatus.BAD_REQUEST.value(), "当前填写的模板代码位置不存在", null);
+                    }
+                    // 数据库验证
+                    String errorMsg = this.testConn(config);
+                    if (StringUtils.isNoneBlank(errorMsg)) {
+                        // 数据库验证不通过
+                        return new ResponseBean(HttpStatus.BAD_REQUEST.value(), errorMsg, null);
+                    }
+                    // 写入
                     safeProperties.load(input);
-                    // 遍历map写入
-                    Iterator<Map.Entry<String, String>> entries = config.entrySet().iterator();
-                    while (entries.hasNext()) {
-                        Map.Entry<String, String> entry = entries.next();
-                        if (Constant.TEMPLATE.equals(entry.getKey())) {
-                            // 查看配置路径下macro.includ文件是否存在
-                            File file = new File(Constant.PROJECT_PATH + entry.getValue() + "/macro.include");
-                            if (!file.exists()) {
-                                // 模板代码位置不存在
-                                return new ResponseBean(HttpStatus.BAD_REQUEST.value(), "当前填写的模板代码位置不存在", null);
-                            }
-                        }
+                    for (Map.Entry<String, String> entry : config.entrySet()) {
                         safeProperties.setProperty(entry.getKey(), entry.getValue());
                     }
                     logger.info("更新配置: {}, url: {}", JSON.toJSONString(safeProperties), Constant.CONFIG_PATH_TEMP);
@@ -289,6 +297,9 @@ public class DataBaseController {
                     safeProperties.store(output, null);
                     Application.restart();
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return new ResponseBean(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
             } finally {
                 if (input != null) {
                     input.close();
@@ -299,7 +310,8 @@ public class DataBaseController {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            throw new SystemException("操作失败");
+            // throw new SystemException("操作失败");
+            return new ResponseBean(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
         }
         return new ResponseBean(HttpStatus.OK.value(), "操作成功", config);
     }
@@ -336,6 +348,48 @@ public class DataBaseController {
             return false;
         }
         return true;
+    }
+
+    private String testConn(Map<String, String> config) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            String driver = config.get("jdbc_driver");
+            Class.forName(driver);
+            connection = DriverManager.getConnection(config.get("jdbc_url"),
+                    config.get("jdbc_username"), config.get("jdbc_password"));
+            statement = connection.createStatement();
+            // 执行查询表数据SQL
+            String sql = "";
+            if (driver.indexOf(DataBaseEnum.MYSQL.getValue()) >= 0) {
+                sql = "SELECT count(0) FROM information_schema.tables WHERE table_schema = (SELECT database())";
+            } else if (driver.indexOf(DataBaseEnum.ORACLE.getValue()) >= 0) {
+                sql = "SELECT count(*) FROM user_tables dt, user_tab_comments dtc, user_objects uo " +
+                        "WHERE dt.table_name = dtc.table_name and dt.table_name = uo.object_name and uo.object_type = 'TABLE'";
+            } else if (driver.indexOf(DataBaseEnum.POSTGRESQL.getValue()) >= 0) {
+
+            } else if (driver.indexOf(DataBaseEnum.SQLSERVER.getValue()) >= 0) {
+            }
+            resultSet = statement.executeQuery(sql);
+            if (!resultSet.next()) {
+                return "该帐号无读取表结构权限，请切换帐号";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        }
+        return "";
     }
 
 }
