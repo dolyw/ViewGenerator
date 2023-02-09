@@ -350,6 +350,15 @@ public class DataBaseController {
         return true;
     }
 
+    /**
+     * 验证数据库连接是否可用
+     *
+     * @param config
+     * @return java.lang.String
+     * @throws
+     * @author wliduo[i@dolyw.com]
+     * @date 2023/2/9 10:29
+     */
     private String testConn(Map<String, String> config) throws SQLException {
         Connection connection = null;
         Statement statement = null;
